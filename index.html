@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vraj Parekh — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loader">
+  <!-- subtle grid overlay -->
+  <div class="ld-grid"></div>
+
+  <!-- logo -->
+  <div class="ld-logo-wrap">
+    <div class="ld-logo-ring"></div>
+    <div class="ld-logo">VP.DEV</div>
+    <div class="ld-logo-sub">PORTFOLIO SYSTEM</div>
+  </div>
+
+  <!-- terminal lines (each step appends a new line) -->
+  <div class="ld-terminal">
+    <div id="ld-text" class="ld-lines-wrap"></div>
+    <span class="ld-cursor">▋</span>
+  </div>
+
+  <!-- progress -->
+  <div class="ld-bar-wrap">
+    <div class="ld-bar" id="ld-bar"></div>
+    <div class="ld-bar-glow" id="ld-bar-glow"></div>
+  </div>
+  <div class="ld-pct" id="ld-pct">0%</div>
+
+  <!-- AI presence (fades in at ~90%) -->
+  <div class="ld-ai" id="ld-ai">
+    <div class="ld-ai-ring"></div>
+    <svg class="ld-ai-icon" width="22" height="22" viewBox="0 0 36 36" fill="none">
+      <circle cx="18" cy="18" r="15" stroke="url(#ldAiRing)" stroke-width="1.8" fill="none"/>
+      <defs>
+        <linearGradient id="ldAiRing" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#4fa3ff"/>
+          <stop offset="100%" stop-color="#a855f7"/>
+        </linearGradient>
+      </defs>
+      <path d="M13 13.5C13 12.12 14.12 11 15.5 11H22C23.1 11 24 11.9 24 13V19C24 20.1 23.1 21 22 21H15L12 24V13.5Z" fill="url(#ldAiRing)" opacity=".85"/>
+    </svg>
+    <span class="ld-ai-label">AI Assistant Online</span>
+  </div>
+</div>
+
+<!-- CURSOR -->
+<div id="cur"></div>
+<div id="cur-o"></div>
+
+<!-- SCROLL PROGRESS -->
+<div id="pg"></div>
+
+<!-- THREE.JS + PARTICLES CANVASES -->
+<canvas id="three-cv"></canvas>
+<canvas id="p-cv"></canvas>
+
+<!-- BLOBS -->
+<div class="blobs">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+</div>
+
+<!-- LOGO CLICK COUNTER -->
+<div class="logo-click-counter" id="click-counter"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" id="nav-logo" onclick="handleLogoClick()">
+    <span class="logo-dot"></span>
+    <span id="vp-dev">VP.DEV</span>
+    <span class="logo-click-hint">×5</span>
+    <span id="dev-hint-bubble">🔒 Click 5× to unlock Developer Mode</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-end">
+    <button class="icon-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle theme">☀️</button>
+    <button class="icon-btn" onclick="openTerminal()" title="Terminal [Ctrl+~]">⌨️</button>
+    <a href="https://www.linkedin.com/in/vraj-parekh-7b801b30b" target="_blank" class="nav-btn">Hire Me</a>
+    <div class="ham" id="ham" onclick="toggleMobNav()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<!-- TERMINAL HINT BUBBLE -->
+<div class="term-hint-bubble" id="term-hint-bubble">⌨️ Terminal [Ctrl+~]</div>
+
+<!-- MOBILE NAV -->
+<div class="mob-nav" id="mob-nav">
+  <button class="mob-close" onclick="toggleMobNav()">✕</button>
+  <a href="#about" onclick="toggleMobNav()">About</a>
+  <a href="#journey" onclick="toggleMobNav()">Journey</a>
+  <a href="#education" onclick="toggleMobNav()">Education</a>
+  <a href="#skills" onclick="toggleMobNav()">Skills</a>
+  <a href="#projects" onclick="toggleMobNav()">Projects</a>
+  <a href="#achievements" onclick="toggleMobNav()">Achievements</a>
+  <a href="#contact" onclick="toggleMobNav()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero-section" style="position:relative;z-index:1">
+  <div id="hero">
+    <div class="hero-left">
+      <div class="hero-pill"><span class="pill-dot"></span>Available for opportunities</div>
+      <h1 class="hero-h1">
+        <span class="h1-sm">Hello, I'm</span>
+        <span class="h1-grad">Vraj Parekh</span>
+      </h1>
+      <div class="hero-type">
+        <span class="type-word" id="typing-text"></span><span class="cb-blink">|</span>
+      </div>
+      <p class="hero-desc">Computer Engineering student at MBIT, CVM University · AI Developer · Hackathon Winner building intelligent solutions that bridge people and technology.</p>
+      <div class="hero-btns">
+        <button class="btn btn-p" onclick="scrollToSection('projects');addRipple(event,this)">View Projects →</button>
+        <a href="https://www.linkedin.com/in/vraj-parekh-7b801b30b" target="_blank" class="btn btn-g" onclick="addRipple(event,this)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <button class="btn btn-g" onclick="dlResume();addRipple(event,this)">⬇ Resume</button>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="card-3d-wrap">
+        <div class="card-3d" id="card3d">
+          <div class="photo-wrap">
+            <img src="Screenshot 2026-03-17 191605.png" alt="Vraj Parekh" class="photo-img" onerror="this.src='';this.style.display='none';document.querySelector('.photo-fallback').style.display='flex'">
+            <div class="photo-fallback">
+              <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" style="color:#4fa3ff;opacity:.7"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="photo-ring"></div>
+            <div class="photo-ring2"></div>
+          </div>
+          <div class="card-name">VRAJ PAREKH</div>
+          <div class="card-role">CE Student · WEB Developer</div>
+          <div class="card-badges">
+            <span class="cbadge">Java</span>
+            <span class="cbadge v">Python</span>
+            <span class="cbadge t">Node.js</span>
+            <span class="cbadge">GCP</span>
+          </div>
+        </div>
+        <div class="fb fb1">🏆 Hackathon Winner</div>
+        <div class="fb fb2">☁️ GCP Certified</div>
+        <div class="fb fb3">⭐ CPI: 8.79</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div>SCROLL</div>
+</section>
+
+<!-- STATS -->
+<div class="stats-wrap reveal">
+  <div class="stats-inner">
+    <div class="stat"><div class="stat-val" data-count="4">0</div><div class="stat-lbl">Projects Built</div></div>
+    <div class="stat"><div class="stat-val" data-count="5">0</div><div class="stat-lbl">Certifications</div></div>
+    <div class="stat"><div class="stat-val" data-count="1">0</div><div class="stat-lbl">Hackathon Win 🏆</div></div>
+    <div class="stat"><div class="stat-val" data-count="879" data-suffix="/1000">0</div><div class="stat-lbl">Academic CPI</div></div>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="inner">
+    <div class="ey reveal">About Me</div>
+    <h2 class="st reveal">The person behind the code</h2>
+    <div class="about-grid">
+      <div class="reveal" style="transition-delay:.1s">
+        <div class="acard">
+          <div class="acard-title">Profile</div>
+          <div class="info-row">
+            <div class="i-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            </div>
+            <div><div class="i-lbl">Degree</div><div class="i-val">B.Tech Computer Engineering</div><div style="font-size:.72rem;color:var(--t2);margin-top:.1rem">MBIT, CVM University</div></div>
+          </div>
+          <div class="info-row">
+            <div class="i-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div><div class="i-lbl">Academic</div><div class="i-val">CPI: 8.79</div></div>
+          </div>
+          <div class="info-row">
+            <div class="i-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div><div class="i-lbl">Email</div><div class="i-val" style="font-size:.8rem"><a href="https://mail.google.com/mail/u/0/?fs=1&to=vraj13122005@gmail.com&su=Portfolio+Contact&body=Hi+Vraj,%0A%0A&tf=cm" target="_blank" rel="noopener" oncontextmenu="this.href='mailto:vraj13122005@gmail.com'" style="color:var(--neon);text-decoration:none">vraj13122005@gmail.com</a></div></div>
+          </div>
+          <div class="info-row">
+            <div class="i-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .98h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div><div class="i-lbl">Phone</div><div class="i-val">+91 9316464837</div></div>
+          </div>
+          <div class="info-row">
+            <div class="i-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div><div class="i-lbl">Location</div><div class="i-val">Gujarat, India</div></div>
+          </div>
+          <div class="info-row">
+            <div class="i-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </div>
+            <div><div class="i-lbl">LinkedIn</div><div class="i-val" style="font-size:.78rem"><a href="https://www.linkedin.com/in/vraj-parekh-7b801b30b" target="_blank" style="color:var(--neon);text-decoration:none">vraj-parekh-7b801b30b</a></div></div>
+          </div>
+          <div class="info-row">
+            <div class="i-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            </div>
+            <div><div class="i-lbl">GitHub</div><div class="i-val" style="font-size:.78rem"><a href="https://github.com/vrajparekh1312" target="_blank" style="color:var(--neon);text-decoration:none">github.com/vrajparekh1312</a></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:.2s">
+        <div class="about-text">
+          <p>I'm <strong>Vraj Ashokbhai Parekh</strong>, a passionate Computer Engineering student with a deep interest in <strong>AI, web development</strong>, and building solutions that make a real difference.</p>
+          <p>I won <strong>1st place at the CVMU 4.0 Hackathon</strong> with CitySolve and built AI-powered systems for <strong>Kochi Metro Rail (KMRL)</strong> at SIH 2025.</p>
+          <p>Armed with <strong>5 cloud certifications</strong> (Google Cloud &amp; AWS) and hands-on experience across the full stack, I thrive at the intersection of intelligent systems and scalable engineering.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- JOURNEY — HORIZONTAL TIMELINE -->
+<section id="journey">
+  <div class="inner">
+    <div class="ey reveal">My Journey</div>
+    <h2 class="st reveal">Turning ideas into real-world solutions</h2>
+    <p class="sd reveal" style="margin-bottom:0">Through technology, creativity, and continuous growth — scroll left to right.</p>
+
+    <div class="htl-outer reveal" style="transition-delay:.1s">
+      <!-- Line layer lives OUTSIDE the overflow-x:auto track so it never gets clipped -->
+      <div class="htl-line-layer" id="htl-line-layer"></div>
+      <div class="htl-scroll-hint">
+        <span class="htl-arrow-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        </span>
+        Scroll to explore
+        <span class="htl-arrow-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </span>
+      </div>
+      <div class="htl-track-wrap" id="htl-track">
+        <div class="htl-line"></div>
+
+        <!-- STEP 1 -->
+        <div class="htl-step">
+          <div class="htl-dot htl-dot--blue"><span>🏗️</span></div>
+          <div class="htl-connector"></div>
+          <div class="htl-card htl-card--blue">
+            <div class="htl-date">Jun – Aug 2024</div>
+            <div class="htl-title">Foundation</div>
+            <div class="htl-desc">Built strong programming fundamentals and developed a solid problem-solving mindset.</div>
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="htl-step">
+          <div class="htl-dot htl-dot--violet"><span>🌐</span></div>
+          <div class="htl-connector"></div>
+          <div class="htl-card htl-card--violet">
+            <div class="htl-date">Sep – Oct 2024</div>
+            <div class="htl-title">Web Development</div>
+            <div class="htl-desc">Created responsive and interactive websites using modern web technologies.</div>
+          </div>
+        </div>
+
+        <!-- STEP 3 — EnviroMine -->
+        <div class="htl-step htl-step--project">
+          <div class="htl-dot htl-dot--teal htl-dot--live"><span>🌱</span></div>
+          <div class="htl-connector"></div>
+          <div class="htl-card htl-card--teal htl-card--project">
+            <div class="htl-proj-logo-wrap">
+              <img src="enviromine_logo.png" alt="EnviroMine" class="htl-proj-logo" onerror="this.style.display='none';this.parentElement.querySelector('.htl-logo-fallback').style.display='flex'">
+              <div class="htl-logo-fallback" style="display:none">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#06d6a0" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+              </div>
+            </div>
+            <div class="htl-date">Nov – Dec 2024</div>
+            <div class="htl-title">EnviroMine <span class="htl-live-badge">● LIVE</span></div>
+            <div class="htl-desc">Carbon emission monitoring for coal mines — tech meets sustainability.</div>
+            <a href="https://enviromine.netlify.app/" target="_blank" class="htl-link">🌐 View Live ↗</a>
+          </div>
+        </div>
+
+        <!-- STEP 4 -->
+        <div class="htl-step">
+          <div class="htl-dot htl-dot--amber"><span>⚙️</span></div>
+          <div class="htl-connector"></div>
+          <div class="htl-card htl-card--amber">
+            <div class="htl-date">Jan – Mar 2025</div>
+            <div class="htl-title">Backend Development</div>
+            <div class="htl-desc">APIs, databases, and server-side logic to build scalable systems.</div>
+          </div>
+        </div>
+
+        <!-- STEP 5 — HerbCure -->
+        <div class="htl-step htl-step--project">
+          <div class="htl-dot htl-dot--green htl-dot--live"><span>🌿</span></div>
+          <div class="htl-connector"></div>
+          <div class="htl-card htl-card--green htl-card--project">
+            <div class="htl-proj-logo-wrap">
+              <img src="herbcure_logo.png" alt="HerbCure" class="htl-proj-logo" onerror="this.style.display='none';this.parentElement.querySelector('.htl-logo-fallback').style.display='flex'">
+              <div class="htl-logo-fallback" style="display:none">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/></svg>
+              </div>
+            </div>
+            <div class="htl-date">Apr – Sep 2025</div>
+            <div class="htl-title">HerbCure</div>
+            <div class="htl-desc">AI-powered herbal platform focused on safe and smart healthcare solutions.</div>
+          </div>
+        </div>
+
+        <!-- STEP 6 -->
+        <div class="htl-step">
+          <div class="htl-dot htl-dot--violet"><span>🚀</span></div>
+          <div class="htl-connector"></div>
+          <div class="htl-card htl-card--violet">
+            <div class="htl-date">Oct – Dec 2025</div>
+            <div class="htl-title">Refinement</div>
+            <div class="htl-desc">Improved UI/UX, code quality, and overall project performance.</div>
+          </div>
+        </div>
+
+        <!-- STEP 7 — Infer@ -->
+        <div class="htl-step htl-step--project">
+          <div class="htl-dot htl-dot--blue htl-dot--live"><span>🧠</span></div>
+          <div class="htl-connector"></div>
+          <div class="htl-card htl-card--blue htl-card--project">
+            <div class="htl-proj-logo-wrap htl-proj-logo-wrap--dark">
+              <img src="infera_logo.png" alt="Infer@" class="htl-proj-logo" onerror="this.style.display='none';this.parentElement.querySelector('.htl-logo-fallback').style.display='flex'">
+              <div class="htl-logo-fallback" style="display:none">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4fa3ff" stroke-width="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/></svg>
+              </div>
+            </div>
+            <div class="htl-date">Jan 2026</div>
+            <div class="htl-title">Infer@ <span class="htl-live-badge">● LIVE</span></div>
+            <div class="htl-desc">AI Document Intelligence for Kochi Metro Rail at SIH 2025.</div>
+            <a href="https://inferat-official.vercel.app/" target="_blank" class="htl-link">🌐 View Live ↗</a>
+          </div>
+        </div>
+
+        <!-- STEP 8 — CitySolve -->
+        <div class="htl-step htl-step--project">
+          <div class="htl-dot htl-dot--gold htl-dot--live"><span>🏆</span></div>
+          <div class="htl-connector"></div>
+          <div class="htl-card htl-card--gold htl-card--project">
+            <div class="htl-proj-logo-wrap">
+              <img src="citysolve_logo.png" alt="CitySolve" class="htl-proj-logo" onerror="this.style.display='none';this.parentElement.querySelector('.htl-logo-fallback').style.display='flex'">
+              <div class="htl-logo-fallback" style="display:none">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+            </div>
+            <div class="htl-date">Feb – Mar 2026</div>
+            <div class="htl-title">CitySolve 🏆 <span class="htl-live-badge">● LIVE</span></div>
+            <div class="htl-desc">Civic issue platform — Won 1st at CVMU 4.0 Hackathon! GPS + Gov Dashboard.</div>
+            <a href="https://citysolve.me/" target="_blank" class="htl-link htl-link--gold">🌐 View Live ↗</a>
+          </div>
+        </div>
+
+        <!-- STEP 9 — Now -->
+        <div class="htl-step">
+          <div class="htl-dot htl-dot--neon htl-dot--pulse"><span>⚡</span></div>
+          <div class="htl-connector"></div>
+          <div class="htl-card htl-card--neon">
+            <div class="htl-date">Now · 2026</div>
+            <div class="htl-title">What's Next?</div>
+            <div class="htl-desc">Open to internships, collaboration, and the next big challenge. Let's build together!</div>
+          </div>
+        </div>
+
+      </div><!-- end htl-track-wrap -->
+    </div><!-- end htl-outer -->
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="inner">
+    <div class="ey reveal">Education</div>
+    <h2 class="st reveal">Academic Background</h2>
+    <div class="edu-grid">
+
+      <!-- MBIT Card -->
+      <div class="edu-card reveal" style="transition-delay:.1s">
+        <div class="edu-logo-wrap">
+          <img src="mbit-logo.png" alt="MBIT" class="edu-logo"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="edu-logo-fallback" style="display:none">
+            <div class="edu-logo-initials">MBIT</div>
+          </div>
+        </div>
+        <div class="edu-body">
+          <div class="edu-degree">B.Tech Computer Engineering</div>
+          <div class="edu-school">MBIT, CVM University</div>
+          <div class="edu-year">2023 – 2027(RUNNING) · CPI: 8.79</div>
+          <p class="edu-desc">Specializing in AI, full-stack development, and cloud computing. Active in hackathons and technical competitions.</p>
+          <div class="edu-tags"><span class="edu-tag">AI/ML</span><span class="edu-tag">Cloud</span><span class="edu-tag">Frontend</span></div>
+        </div>
+      </div>
+
+      <!-- HSC Card -->
+      <div class="edu-card reveal" style="transition-delay:.15s">
+        <div class="edu-logo-wrap">
+          <img src="rptp-logo.jpg" alt="RPTP Vidhyalay" class="edu-logo"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="edu-logo-fallback" style="display:none">
+            <div class="edu-logo-initials">HSC</div>
+          </div>
+        </div>
+        <div class="edu-body">
+          <div class="edu-degree">Higher Secondary (HSC)</div>
+          <div class="edu-school">Gujarat Board</div>
+          <div class="edu-year">2022 – 2023 </div>
+          <p class="edu-desc">Science stream with focus on Physics, Chemistry, Mathematics, and Computer Science.</p>
+          <div class="edu-tags"><span class="edu-tag">PCM</span><span class="edu-tag">Computer</span></div>
+        </div>
+      </div>
+
+      <!-- SSC Card -->
+      <div class="edu-card reveal" style="transition-delay:.2s">
+        <div class="edu-logo-wrap">
+          <img src="gyanyagna-logo.png" alt="Gyanyagna School" class="edu-logo"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="edu-logo-fallback" style="display:none">
+            <div class="edu-logo-initials">SSC</div>
+          </div>
+        </div>
+        <div class="edu-body">
+          <div class="edu-degree">Secondary (SSC)</div>
+          <div class="edu-school">Gujarat Board</div>
+          <div class="edu-year">2020 – 2021 </div>
+          <p class="edu-desc">Strong academic foundation with distinction in Mathematics and Science subjects.</p>
+          <div class="edu-tags"><span class="edu-tag">Science</span><span class="edu-tag">Maths</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="inner">
+    <div class="ey reveal">Skills</div>
+    <h2 class="st reveal">Technical Expertise</h2>
+    <div class="sk-grid">
+      <div class="sk-card reveal" style="transition-delay:.1s">
+        <div class="sk-head">Languages</div>
+        <div class="sk-bar"><div class="sk-row"><span class="sk-name">Python</span><span class="sk-pct">90%</span></div><div class="sk-track"><div class="sk-fill fn" data-w="90"></div></div></div>
+        <div class="sk-bar"><div class="sk-row"><span class="sk-name">Java</span><span class="sk-pct">85%</span></div><div class="sk-track"><div class="sk-fill fn" data-w="85"></div></div></div>
+        <div class="sk-bar"><div class="sk-row"><span class="sk-name">JavaScript</span><span class="sk-pct">80%</span></div><div class="sk-track"><div class="sk-fill fn" data-w="80"></div></div></div>
+        <div class="sk-bar"><div class="sk-row"><span class="sk-name">C</span><span class="sk-pct">75%</span></div><div class="sk-track"><div class="sk-fill fn" data-w="75"></div></div></div>
+      </div>
+      <div class="sk-card reveal" style="transition-delay:.15s">
+        <div class="sk-head">Web &amp; Backend</div>
+        <div class="sk-bar"><div class="sk-row"><span class="sk-name">Node.js / Express</span><span class="sk-pct">85%</span></div><div class="sk-track"><div class="sk-fill fv" data-w="85"></div></div></div>
+        <div class="sk-bar"><div class="sk-row"><span class="sk-name">REST APIs</span><span class="sk-pct">80%</span></div><div class="sk-track"><div class="sk-fill fv" data-w="80"></div></div></div>
+        <div class="sk-bar"><div class="sk-row"><span class="sk-name">HTML / CSS</span><span class="sk-pct">90%</span></div><div class="sk-track"><div class="sk-fill fv" data-w="90"></div></div></div>
+        <div class="sk-bar"><div class="sk-row"><span class="sk-name">Kotlin (Android)</span><span class="sk-pct">65%</span></div><div class="sk-track"><div class="sk-fill fv" data-w="65"></div></div></div>
+      </div>
+      <div class="sk-card reveal" style="transition-delay:.2s">
+        <div class="sk-head">Databases</div>
+        <div class="sk-bar"><div class="sk-row"><span class="sk-name">MongoDB</span><span class="sk-pct">85%</span></div><div class="sk-track"><div class="sk-fill ft" data-w="85"></div></div></div>
+        <div class="sk-bar"><div class="sk-row"><span class="sk-name">MySQL</span><span class="sk-pct">80%</span></div><div class="sk-track"><div class="sk-fill ft" data-w="80"></div></div></div>
+      </div>
+      <div class="sk-card reveal" style="transition-delay:.25s">
+        <div class="sk-head">AI / Cloud</div>
+        <div class="sk-bar"><div class="sk-row"><span class="sk-name">Google Cloud (GCP)</span><span class="sk-pct">80%</span></div><div class="sk-track"><div class="sk-fill fa" data-w="80"></div></div></div>
+        <div class="sk-bar"><div class="sk-row"><span class="sk-name">AWS Cloud</span><span class="sk-pct">72%</span></div><div class="sk-track"><div class="sk-fill fa" data-w="72"></div></div></div>
+        <div class="sk-bar"><div class="sk-row"><span class="sk-name">OpenCV</span><span class="sk-pct">75%</span></div><div class="sk-track"><div class="sk-fill fa" data-w="75"></div></div></div>
+        <div class="sk-bar"><div class="sk-row"><span class="sk-name">Tesseract OCR</span><span class="sk-pct">78%</span></div><div class="sk-track"><div class="sk-fill fa" data-w="78"></div></div></div>
+        <div class="sk-bar"><div class="sk-row"><span class="sk-name">AI / ML</span><span class="sk-pct">72%</span></div><div class="sk-track"><div class="sk-fill fa" data-w="72"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="inner">
+    <div class="ey reveal">Projects</div>
+    <h2 class="st reveal">What I've built</h2>
+    <p class="sd reveal">From hackathon winners to enterprise AI — real projects, real impact.</p>
+    <div class="pj-grid">
+
+      <!-- CitySolve -->
+      <div class="pj-card gold reveal" style="transition-delay:.1s" onmousemove="pjGlow(event,this)" onclick="openModal('cs')">
+        <div class="pj-tag tag-w">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Hackathon Winner
+        </div>
+        <div class="pj-logo-row">
+          <img src="citysolve_logo.png" alt="CitySolve" class="pj-logo"
+               onerror="this.style.display='none';this.parentElement.querySelector('.pj-logo-fallback').style.display='flex'">
+          <div class="pj-logo-fallback" style="display:none">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span style="color:#fbbf24;font-family:var(--font-h);font-size:.8rem;font-weight:700;margin-left:.4rem">CitySolve</span>
+          </div>
+        </div>
+        <h3 class="pj-title">CitySolve</h3>
+        <p class="pj-sub">Smart Civic Issue Reporting Platform</p>
+        <ul class="pj-feats">
+          <li>GPS-tagged citizen issue reports with photos</li>
+          <li>Government authority resolution dashboard</li>
+          <li>Real-time status tracking and workflow</li>
+          <li>Won 1st place at CVMU 4.0 Hackathon</li>
+        </ul>
+        <div class="pj-stack"><span class="tech-pill">HTML/CSS</span><span class="tech-pill">JavaScript</span><span class="tech-pill">Node.js</span><span class="tech-pill">Express.js</span><span class="tech-pill">MongoDB</span><span class="tech-pill">Kotlin</span></div>
+        <div class="pj-btns">
+          <button class="pj-btn pj-btn-p" onclick="event.stopPropagation();openModal('cs')">View Details</button>
+          <a href="https://citysolve.me/" target="_blank" class="pj-btn pj-btn-live" onclick="event.stopPropagation()">🌐 Live ↗</a>
+          <a href="https://github.com/vrajparekh1312" target="_blank" class="pj-btn pj-btn-g" onclick="event.stopPropagation()">GitHub ↗</a>
+        </div>
+      </div>
+
+      <!-- Infer@ -->
+      <div class="pj-card reveal" style="transition-delay:.15s" onmousemove="pjGlow(event,this)" onclick="openModal('infer')">
+        <div class="pj-tag tag-a">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M20 2v4h-4"/><path d="M7.5 12a4.5 4.5 0 0 0 9 0"/></svg>
+          AI · Enterprise
+        </div>
+        <div class="pj-logo-row pj-logo-row--dark">
+          <img src="infera_logo.png" alt="Infer@" class="pj-logo"
+               onerror="this.style.display='none';this.parentElement.querySelector('.pj-logo-fallback').style.display='flex'">
+          <div class="pj-logo-fallback" style="display:none">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="1.5"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/></svg>
+            <span style="color:#a855f7;font-family:var(--font-h);font-size:.8rem;font-weight:700;margin-left:.4rem">Infer@</span>
+          </div>
+        </div>
+        <h3 class="pj-title">Infer@</h3>
+        <p class="pj-sub">AI Document Intelligence for KMRL</p>
+        <ul class="pj-feats">
+          <li>OCR-based document analysis and layout detection</li>
+          <li>Automated structured data extraction pipeline</li>
+          <li>Built for Kochi Metro Rail at SIH 2025</li>
+          <li>Intelligent document classification system</li>
+        </ul>
+        <div class="pj-stack"><span class="tech-pill">Python</span><span class="tech-pill">OpenCV</span><span class="tech-pill">Tesseract OCR</span><span class="tech-pill">Node.js</span><span class="tech-pill">MongoDB</span></div>
+        <div class="pj-btns">
+          <button class="pj-btn pj-btn-p" onclick="event.stopPropagation();openModal('infer')">View Details</button>
+          <a href="https://inferat-official.vercel.app/" target="_blank" class="pj-btn pj-btn-live" onclick="event.stopPropagation()">🌐 Live ↗</a>
+          <a href="https://github.com/vrajparekh1312" target="_blank" class="pj-btn pj-btn-g" onclick="event.stopPropagation()">GitHub ↗</a>
+        </div>
+      </div>
+
+      <!-- HerbCure -->
+      <div class="pj-card reveal" style="transition-delay:.2s" onmousemove="pjGlow(event,this)" onclick="openModal('hc')">
+        <div class="pj-tag tag-a">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+          AI · Healthcare
+        </div>
+        <div class="pj-logo-row">
+          <img src="herbcure_logo.png" alt="HerbCure" class="pj-logo"
+               onerror="this.style.display='none';this.parentElement.querySelector('.pj-logo-fallback').style.display='flex'">
+          <div class="pj-logo-fallback" style="display:none">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#06d6a0" stroke-width="1.5"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/></svg>
+            <span style="color:#06d6a0;font-family:var(--font-h);font-size:.8rem;font-weight:700;margin-left:.4rem">HerbCure</span>
+          </div>
+        </div>
+        <h3 class="pj-title">HerbCure</h3>
+        <p class="pj-sub">AI Herbal Medicine Detection System</p>
+        <ul class="pj-feats">
+          <li>Scan herbal medicines using Tesseract OCR</li>
+          <li>AI-powered alternative medicine recommendations</li>
+          <li>Intelligent cross-comparison system</li>
+          <li>Accessible healthcare through modern AI</li>
+        </ul>
+        <div class="pj-stack"><span class="tech-pill">Python</span><span class="tech-pill">AI/ML</span><span class="tech-pill">Tesseract OCR</span><span class="tech-pill">JavaScript</span><span class="tech-pill">Node.js</span></div>
+        <div class="pj-btns">
+          <button class="pj-btn pj-btn-p" onclick="event.stopPropagation();openModal('hc')">View Details</button>
+          <a href="https://github.com/vrajparekh1312" target="_blank" class="pj-btn pj-btn-g" onclick="event.stopPropagation()">GitHub ↗</a>
+        </div>
+      </div>
+
+      <!-- EnviroMine -->
+      <div class="pj-card reveal" style="transition-delay:.25s" onmousemove="pjGlow(event,this)" onclick="openModal('em')">
+        <div class="pj-tag tag-e">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Sustainability · AI
+        </div>
+        <div class="pj-logo-row">
+          <img src="enviromine_logo.png" alt="EnviroMine" class="pj-logo"
+               onerror="this.style.display='none';this.parentElement.querySelector('.pj-logo-fallback').style.display='flex'">
+          <div class="pj-logo-fallback" style="display:none">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#06d6a0" stroke-width="1.5"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+            <span style="color:#06d6a0;font-family:var(--font-h);font-size:.8rem;font-weight:700;margin-left:.4rem">EnviroMine</span>
+          </div>
+        </div>
+        <h3 class="pj-title">EnviroMine</h3>
+        <p class="pj-sub">Coal Mine Emission Analyzer</p>
+        <ul class="pj-feats">
+          <li>Calculate carbon emissions from operations</li>
+          <li>AI-driven reduction strategy generator</li>
+          <li>Sustainability scoring and detailed reports</li>
+          <li>Environmental impact visualization</li>
+        </ul>
+        <div class="pj-stack"><span class="tech-pill">HTML/CSS</span><span class="tech-pill">JavaScript</span><span class="tech-pill">Node.js</span><span class="tech-pill">AI Analysis</span></div>
+        <div class="pj-btns">
+          <button class="pj-btn pj-btn-p" onclick="event.stopPropagation();openModal('em')">View Details</button>
+          <a href="https://enviromine.netlify.app/" target="_blank" class="pj-btn pj-btn-live" onclick="event.stopPropagation()">🌐 Live ↗</a>
+          <a href="https://github.com/vrajparekh1312" target="_blank" class="pj-btn pj-btn-g" onclick="event.stopPropagation()">GitHub ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievement">
+  <div class="inner">
+    <div class="ey reveal">Achievement</div>
+    <h2 class="st reveal">Milestones &amp; Recognition</h2>
+
+    <div class="ach-hero reveal">
+      <div class="trophy">🏆</div>
+      <div>
+        <div class="ach-title">1st Place — CVMU 4.0 Hackathon</div>
+        <div class="ach-desc">Built <strong style="color:var(--t1)">CitySolve</strong> — a full-stack civic issue reporting platform with GPS tracking, image uploads, and a government authority dashboard — winning first place among all competing teams.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:3rem">
+      <div class="ey reveal" style="margin-bottom:1.4rem">Certifications</div>
+
+      <!-- GCP GROUP -->
+      <div class="cert-group reveal" style="transition-delay:.08s">
+        <div class="cert-group-header">
+          <div class="cert-group-icon" style="background:linear-gradient(135deg,#4285f4,#34a853)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+          </div>
+          <div>
+            <div class="cert-group-name">🟡 Google Cloud Certifications</div>
+            <a href="https://www.skills.google/public_profiles/4f53c608-01ef-4e86-9de0-86a43037fe8b" target="_blank" class="cert-group-link">🔗 View Profile ↗</a>
+          </div>
+        </div>
+        <div class="certs-grid">
+          <div class="cert-card" style="transition-delay:.1s">
+            <div class="cert-icon" style="background:linear-gradient(135deg,#4285f4,#0f9d58)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>
+            </div>
+            <div>
+              <div class="cert-name">Google Cloud Computing Foundations: Infrastructure in Google Cloud</div>
+              <div class="cert-iss">Google Cloud · Oct 2023</div>
+            </div>
+          </div>
+          <div class="cert-card" style="transition-delay:.14s">
+            <div class="cert-icon" style="background:linear-gradient(135deg,#4285f4,#0f9d58)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21" stroke="white" stroke-width="2"/><line x1="12" y1="17" x2="12" y2="21" stroke="white" stroke-width="2"/></svg>
+            </div>
+            <div>
+              <div class="cert-name">Google Cloud Computing Foundations: Cloud Computing Fundamentals</div>
+              <div class="cert-iss">Google Cloud · Oct 2023</div>
+            </div>
+          </div>
+          <div class="cert-card" style="transition-delay:.18s">
+            <div class="cert-icon" style="background:linear-gradient(135deg,#4285f4,#0f9d58)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/></svg>
+            </div>
+            <div>
+              <div class="cert-name">Level 3 GenAI: Prompt Engineering</div>
+              <div class="cert-iss">Google Cloud · Oct 2023</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AWS GROUP -->
+      <div class="cert-group reveal" style="transition-delay:.22s;margin-top:2rem">
+        <div class="cert-group-header">
+          <div class="cert-group-icon" style="background:linear-gradient(135deg,#ff9900,#e67300)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M18.75 12.75h1.5a.75.75 0 000-1.5h-1.5a.75.75 0 000 1.5zM12 6a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 0112 6zM12 18a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 0112 18zM3.75 6.75h1.5a.75.75 0 100-1.5h-1.5a.75.75 0 000 1.5zM5.25 18.75h-1.5a.75.75 0 010-1.5h1.5a.75.75 0 010 1.5zM3 12a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 013 12z"/></svg>
+          </div>
+          <div>
+            <div class="cert-group-name">🟠 AWS Certification</div>
+            <a href="https://www.credly.com/badges/95a724c2-35e5-4bf3-bc31-f82d30bfe921/public_url" target="_blank" class="cert-group-link">🔗 View Badge ↗</a>
+          </div>
+        </div>
+        <div class="certs-grid">
+          <div class="cert-card" style="transition-delay:.24s">
+            <div class="cert-icon" style="background:linear-gradient(135deg,#ff9900,#e67300)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+              <div class="cert-name">AWS Academy Graduate — Cloud Foundations</div>
+              <div class="cert-iss">Amazon Web Services · Feb 2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- LEADERSHIP -->
+<section id="leadership">
+  <div class="inner">
+    <div class="ey reveal">Leadership</div>
+    <h2 class="st reveal">Team &amp; Collaboration</h2>
+    <div class="lead-grid">
+      <div class="lead-card reveal" style="transition-delay:.1s">
+        <div class="lead-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        </div>
+        <div class="lead-title">Task Coordination</div>
+        <div class="lead-desc">Assigning tasks and tracking progress across hackathon and academic teams with clear milestone planning.</div>
+      </div>
+      <div class="lead-card reveal" style="transition-delay:.14s">
+        <div class="lead-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="lead-title">Creative Problem Solving</div>
+        <div class="lead-desc">Leading collaborative brainstorming that blends technical constraints with innovative solutions.</div>
+      </div>
+      <div class="lead-card reveal" style="transition-delay:.18s">
+        <div class="lead-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <div class="lead-title">Architecture Decisions</div>
+        <div class="lead-desc">Driving system design and tech stack discussions for scalable, maintainable solutions.</div>
+      </div>
+      <div class="lead-card reveal" style="transition-delay:.22s">
+        <div class="lead-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="lead-title">Deadline Delivery</div>
+        <div class="lead-desc">Consistently delivering polished products under tight hackathon and academic deadlines.</div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="inner">
+    <div class="ey reveal">Contact</div>
+    <h2 class="st reveal">Let's build something great</h2>
+    <div class="ct-grid">
+      <div class="reveal" style="transition-delay:.1s">
+        <p class="sd" style="margin-bottom:0">Open to internships, collaborations, and interesting projects. Reach out — I would love to connect.</p>
+        <div class="ct-links">
+          <a href="https://mail.google.com/mail/u/0/?fs=1&to=vraj13122005@gmail.com&su=Portfolio+Contact&body=Hi+Vraj,%0A%0A&tf=cm" target="_blank" class="ct-link" onclick="if(event.ctrlKey||event.metaKey)return;event.preventDefault();window.open(this.href,'_blank');">
+            <div class="cl-icon cl-icon-email"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+            <div><span class="cl-lbl">Email</span><span class="cl-val">vraj13122005@gmail.com</span></div>
+          </a>
+          <a href="tel:+919316464837" class="ct-link">
+            <div class="cl-icon cl-icon-phone"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div>
+            <div><span class="cl-lbl">Phone</span><span class="cl-val">+91 9316464837</span></div>
+          </a>
+          <a href="https://github.com/vrajparekh1312" target="_blank" class="ct-link">
+            <div class="cl-icon cl-icon-github"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></div>
+            <div><span class="cl-lbl">GitHub</span><span class="cl-val">github.com/vrajparekh1312</span></div>
+          </a>
+          <a href="https://www.linkedin.com/in/vraj-parekh-7b801b30b" target="_blank" class="ct-link">
+            <div class="cl-icon cl-icon-linkedin"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
+            <div><span class="cl-lbl">LinkedIn</span><span class="cl-val">vraj-parekh-7b801b30b</span></div>
+          </a>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:.2s">
+        <div class="ct-form">
+          <div class="form-group"><label>Your Name</label><input type="text" placeholder="Rocky wen"></div>
+          <div class="form-group"><label>Email Address</label><input type="email" placeholder="Rocky@example.com"></div>
+          <div class="form-group"><label>Message</label><textarea placeholder="Hi Vraj, I would love to collaborate on..."></textarea></div>
+          <button class="form-btn" id="form-btn" onclick="handleForm(this)">SEND MESSAGE →</button>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=vraj13122005@gmail.com&su=Portfolio%20Contact&body=Hi%20Vraj%2C%0A%0A" target="_blank" class="form-gmail-btn" id="form-gmail-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.910 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+            Open in Gmail instead
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">VRAJ PAREKH</div>
+  <p style="color:var(--t2);font-size:.8rem;font-family:var(--font-m)">Computer Engineering · WEB Developer · Hackathon Winner</p>
+
+  <!-- CERTIFICATIONS ROW -->
+  <div class="footer-certs">
+    <a href="https://www.skills.google/public_profiles/4f53c608-01ef-4e86-9de0-86a43037fe8b" target="_blank" class="footer-cert-badge" title="Google Cloud Certifications">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="#4285f4"/></svg>
+      <span>Google Cloud</span>
+      <span class="footer-cert-count">3 Certs</span>
+    </a>
+    <a href="https://www.credly.com/badges/95a724c2-35e5-4bf3-bc31-f82d30bfe921/public_url" target="_blank" class="footer-cert-badge" title="AWS Cloud Foundations Certificate">
+      <svg width="18" height="18" viewBox="0 0 48 48" fill="none"><path d="M14.3 25.1c-.2.5-.5.9-.8 1.2-.4.3-.8.5-1.3.5-.6 0-1-.2-1.3-.6-.3-.4-.5-1-.5-1.7 0-.8.2-1.4.5-1.8.3-.4.8-.6 1.4-.6.5 0 .9.2 1.3.5.3.3.6.7.8 1.3l3.1-1c-.4-1.1-1-2-1.9-2.6-.9-.6-1.9-.9-3.2-.9-1.7 0-3 .5-4 1.6-1 1.1-1.5 2.5-1.5 4.3 0 1.8.5 3.2 1.5 4.2 1 1 2.4 1.5 4.1 1.5 1.3 0 2.4-.3 3.3-.9.9-.6 1.5-1.5 2-2.6l-3.5-1.4zm10 5.3h3.5V18.9h-3.5v11.5zm16.9-5.7c-.3-.4-.7-.7-1.2-.9l-1.9-.8c-.4-.2-.6-.3-.8-.5-.2-.2-.2-.4-.2-.6 0-.2.1-.4.3-.6.2-.2.5-.2.8-.2.4 0 .7.1 1 .4.3.2.5.6.6 1l3-1.2c-.4-1-1-1.8-1.8-2.3-.8-.5-1.8-.8-3-.8-1.4 0-2.5.4-3.4 1.1-.8.7-1.3 1.7-1.3 2.9 0 .8.2 1.5.6 2 .4.6.9 1 1.5 1.3l2 .8c.4.2.7.4.9.5.2.2.3.4.3.7 0 .3-.1.5-.3.7-.2.2-.5.3-.9.3-.5 0-.9-.2-1.2-.5-.3-.3-.5-.8-.6-1.4l-3.2 1.1c.3 1.2.9 2.1 1.8 2.7.9.6 2 .9 3.4.9 1.5 0 2.7-.4 3.6-1.2.9-.8 1.3-1.8 1.3-3.1 0-.8-.2-1.5-.5-2z" fill="#ff9900"/></svg>
+      <span>AWS</span>
+      <span class="footer-cert-count">1 Cert</span>
+    </a>
+    <a href="https://www.linkedin.com/in/vraj-parekh-7b801b30b" target="_blank" class="footer-cert-badge footer-cert-badge--hackathon" title="CVMU 4.0 Hackathon Winner">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span>Hackathon</span>
+      <span class="footer-cert-count">1st Place</span>
+    </a>
+  </div>
+
+  <div class="footer-social">
+    <a href="https://github.com/vrajparekh1312" target="_blank" class="fsoc" title="GitHub">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+    </a>
+    <a href="https://www.linkedin.com/in/vraj-parekh-7b801b30b" target="_blank" class="fsoc" title="LinkedIn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+    <a href="https://mail.google.com/mail/u/0/?fs=1&to=vraj13122005@gmail.com&su=Portfolio+Contact&body=Hi+Vraj,%0A%0A&tf=cm" target="_blank" class="fsoc" title="Email">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+    </a>
+  </div>
+  <p style="color:var(--t3);font-size:.72rem;font-family:var(--font-m)">© 2026 Vraj Ashokbhai Parekh · Built with passion 🚀</p>
+  <p style="color:var(--t3);font-size:.62rem;font-family:var(--font-m);margin-top:.3rem">[ Click logo 5× for Easter egg · Ctrl+~ for terminal ]</p>
+</footer>
+
+<!-- AI ASSISTANT -->
+<div id="ai-wrap">
+  <div class="ai-win" id="ai-win">
+    <div class="ai-hdr">
+      <!-- JARVIS-style energy core avatar -->
+      <div class="ai-av">
+        <div class="ai-av-ring"></div>
+        <div class="ai-av-ring ai-av-ring2"></div>
+        <svg width="22" height="22" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="aiCore" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#4fa3ff" stop-opacity=".35"/>
+              <stop offset="100%" stop-color="#a855f7" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="aiRing2" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#4fa3ff"/>
+              <stop offset="100%" stop-color="#a855f7"/>
+            </linearGradient>
+          </defs>
+          <!-- energy core fill -->
+          <circle cx="18" cy="18" r="14" fill="url(#aiCore)"/>
+          <!-- processing ring -->
+          <circle cx="18" cy="18" r="15" stroke="url(#aiRing2)" stroke-width="1.6" fill="none"
+            stroke-dasharray="28 66" stroke-linecap="round"/>
+          <!-- AI node lines -->
+          <circle cx="18" cy="18" r="4" fill="#4fa3ff" opacity=".9"/>
+          <line x1="18" y1="8" x2="18" y2="14" stroke="#4fa3ff" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
+          <line x1="18" y1="22" x2="18" y2="28" stroke="#a855f7" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
+          <line x1="8" y1="18" x2="14" y2="18" stroke="#4fa3ff" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
+          <line x1="22" y1="18" x2="28" y2="18" stroke="#a855f7" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
+        </svg>
+      </div>
+      <div style="flex:1">
+        <div class="ai-hname">VP.AI ASSISTANT</div>
+        <div class="ai-status"><span class="ai-status-dot"></span>ONLINE</div>
+      </div>
+      <div class="ai-hdr-close" onclick="toggleAI()" title="Close">✕</div>
+    </div>
+    <div class="ai-msgs" id="ai-msgs">
+      <div class="ai-bot">Hi 👋 I'm Vraj's AI. Ask me about his <b>projects</b>, <b>skills</b>, <b>achievements</b>, or how to <b>contact him</b>!</div>
+    </div>
+    <div class="ai-inp-row">
+      <input class="ai-inp" id="ai-inp" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter')sendAI()">
+      <button class="ai-send" onclick="sendAI()">➤</button>
+    </div>
+  </div>
+
+  <!-- JARVIS bubble button -->
+  <button class="ai-bubble" onclick="toggleAI()" title="VP.AI Assistant">
+    <div class="ai-bubble-core"></div>
+    <svg width="30" height="30" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="bCore" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4fa3ff" stop-opacity=".25"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+        <linearGradient id="bRing" x1="0" y1="0" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#4fa3ff"/>
+          <stop offset="50%" stop-color="#ffffff" stop-opacity=".85"/>
+          <stop offset="100%" stop-color="#a855f7"/>
+        </linearGradient>
+        <filter id="bGlow">
+          <feGaussianBlur stdDeviation="2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- energy core bg -->
+      <circle cx="28" cy="28" r="22" fill="url(#bCore)"/>
+      <!-- outer processing ring -->
+      <circle cx="28" cy="28" r="25" stroke="url(#bRing)" stroke-width="2" fill="none"
+        filter="url(#bGlow)" opacity=".95"/>
+      <!-- inner dashed ring -->
+      <circle cx="28" cy="28" r="20" stroke="rgba(79,163,255,.2)" stroke-width="1"
+        stroke-dasharray="6 4" fill="none"/>
+      <!-- center node -->
+      <circle cx="28" cy="28" r="5" fill="#4fa3ff" opacity=".9"/>
+      <!-- node arms -->
+      <line x1="28" y1="14" x2="28" y2="23" stroke="#4fa3ff" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+      <line x1="28" y1="33" x2="28" y2="42" stroke="#a855f7" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+      <line x1="14" y1="28" x2="23" y2="28" stroke="#4fa3ff" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+      <line x1="33" y1="28" x2="42" y2="28" stroke="#a855f7" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+    </svg>
+    <!-- green online dot -->
+    <span class="ai-bubble-dot"></span>
+  </button>
+</div>
+
+<!-- PROJECT MODAL -->
+<div id="modal-ov" onclick="closeModalBg(event)">
+  <div class="modal-box" id="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<!-- DEVELOPER MODE EASTER EGG -->
+<div id="dev-overlay" onclick="closeDevBg(event)">
+  <div class="dev-terminal" id="dev-terminal">
+    <div class="dev-titlebar">
+      <div class="dev-dots"><div class="dev-dot dd-r"></div><div class="dev-dot dd-y"></div><div class="dev-dot dd-g"></div></div>
+      <div class="dev-ttitle">vraj@portfolio:~$ DEVELOPER_MODE</div>
+      <button class="dev-close-btn" onclick="closeDev()">✕ ESC</button>
+    </div>
+    <div class="dev-body" id="dev-body"></div>
+  </div>
+</div>
+
+<!-- REWARD MODAL -->
+<div id="reward-overlay">
+  <div class="reward-box">
+    <div class="reward-confetti" id="reward-confetti"></div>
+    <span class="reward-emoji">🎉</span>
+    <div class="reward-title">ACCESS GRANTED!</div>
+    <div class="reward-msg"><b style="color:#28ca40">Congrats! You unlocked Developer Mode.</b><br><br>You found the hidden Easter egg 🥚<br>Vraj appreciates your curiosity and attention to detail!</div>
+    <div class="reward-badge">🔓 DEVELOPER MODE UNLOCKED</div><br>
+    <button class="reward-close-btn" onclick="closeReward()">[ CLOSE TERMINAL ]</button>
+  </div>
+</div>
+
+<!-- HACKER TERMINAL (Ctrl+~) -->
+<div id="terminal-overlay" onclick="closeTermBg(event)">
+  <div class="terminal-box">
+    <div class="term-titlebar">
+      <div class="term-dots"><div class="term-dot td-r"></div><div class="term-dot td-y"></div><div class="term-dot td-g"></div></div>
+      <div class="term-title">vraj@portfolio ~ bash</div>
+      <button class="term-close-btn" onclick="closeTerm()">✕ ESC</button>
+    </div>
+    <div class="term-output" id="term-output">
+      <div class="term-line"><span class="tc-green">vraj@portfolio</span><span class="tc-muted">:~$</span> <span style="color:#e8eef8">Welcome to Vraj Portfolio Terminal v2.0</span></div>
+      <div class="term-line tc-muted">Type 'help' for available commands.</div>
+    </div>
+    <div class="term-inp-row">
+      <span class="term-prompt">vraj@portfolio:~$&nbsp;</span>
+      <input class="term-inp" id="term-inp" autocomplete="off" spellcheck="false" onkeydown="handleTermInput(event)">
+    </div>
+    <div class="term-hint">TAB: autocomplete &nbsp;|&nbsp; ↑↓: history &nbsp;|&nbsp; ESC: close &nbsp;|&nbsp; Type 'help' to start</div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
