@@ -918,15 +918,15 @@ var TERM_CMDS = {
   },
   skills: function () {
     return '<div class="tc-violet">── LANGUAGES ──</div>' +
-      '<div>Python ████████░░ 90% | Java ████████░░ 85%</div>' +
-      '<div>JavaScript ████████░░ 80% | C ███████░░░ 75%</div>' +
-      '<div class="tc-violet">── WEB &amp; BACKEND ──</div>' +
-      '<div>Node.js/Express ████████░░ 85% | HTML/CSS █████████░ 90%</div>' +
-      '<div class="tc-violet">── CLOUD &amp; AI ──</div>' +
-      '<div>GCP ████████░░ 80% | OpenCV ███████░░░ 75%</div>' +
-      '<div>Tesseract OCR ███████░░░ 78% | AI/ML ███████░░░ 72%</div>' +
-      '<div class="tc-violet">── DATABASES ──</div>' +
-      '<div>MongoDB ████████░░ 85% | MySQL ████████░░ 80%</div>';
+      '<div>Python | Java | JavaScript | C</div>' +
+      '<div class="tc-violet">── FRONTEND ──</div>' +
+      '<div>HTML/CSS | React | Next.js | UI/UX</div>' +
+      '<div class="tc-violet">── BACKEND / MERN ──</div>' +
+      '<div>Node.js | Express | MERN Stack | REST APIs</div>' +
+      '<div class="tc-violet">── DATABASES & CLOUD ──</div>' +
+      '<div>MongoDB | MySQL | Firebase | Google Cloud (GCP)</div>' +
+      '<div class="tc-violet">── AI & TOOLS ──</div>' +
+      '<div>AI/ML | OpenCV | Tesseract OCR | Full-stack delivery</div>';
   },
   projects: function () {
     return '<div class="tc-amber">🏆 CitySolve</div><div>&nbsp;&nbsp;&nbsp;Smart Civic Issue Reporting Platform — CVMU 4.0 Hackathon Winner</div>' +
