@@ -750,10 +750,14 @@ body.light .form-group textarea:focus { border-color: #2563eb; box-shadow: 0 0 0
 .form-group textarea { min-height: 125px; }
 .form-btn { width: 100%; padding: .86rem; background: linear-gradient(135deg,var(--neon),var(--violet)); color: #fff; border: none; border-radius: 11px; font-family: var(--font-h); font-size: .82rem; font-weight: 700; cursor: pointer; transition: all .25s; letter-spacing: .06em; }
 .form-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(79,163,255,.45); }
-.form-gmail-btn { display: flex; align-items: center; justify-content: center; gap: .5rem; width: 100%; padding: .66rem; background: transparent; color: var(--t2); border: 1px solid var(--rim2); border-radius: 11px; font-family: var(--font-m); font-size: .72rem; font-weight: 600; cursor: pointer; transition: all .25s; letter-spacing: .04em; text-decoration: none; margin-top: .4rem; }
+..form-gmail-btn { display: flex; align-items: center; justify-content: center; gap: .5rem; width: 100%; padding: .66rem; background: transparent; color: var(--t2); border: 1px solid var(--rim2); border-radius: 11px; font-family: var(--font-m); font-size: .72rem; font-weight: 600; cursor: pointer; transition: all .25s; letter-spacing: .04em; text-decoration: none; margin-top: .4rem; }
 .form-gmail-btn:hover { border-color: #2563eb; color: #56ea35; background: rgba(234,67,53,.05); transform: translateY(-1px); }
-body.light .form-gmail-btn { border-color: rgba(0,0,0,.15); }
-body.light .form-gmail-btn:hover { border-color: #f3f948; background: rgba(234,67,53,.06); }
+.form-response { min-height: 2rem; padding: .85rem 1rem; border-radius: 12px; font-family: var(--font-m); font-size: .88rem; line-height: 1.4; border: 1px solid transparent; transition: all .25s; margin-top: .35rem; }
+.form-response.success { background: rgba(6,214,160,.12); color: var(--teal); border-color: rgba(6,214,160,.35); }
+.form-response.error { background: rgba(244,63,94,.1); color: var(--rose); border-color: rgba(244,63,94,.35); }
+body.light .form-response { background: rgba(37,99,235,.08); }
+body.light .form-response.error { background: rgba(244,63,94,.1); }
+body.light .form-response.success { background: rgba(6,214,160,.12); }
 
 /* ── FOOTER ── */
 footer { border-top: 1px solid var(--rim); text-align: center; padding: 3rem 2rem; color: var(--t2); font-size: .8rem; position: relative; z-index: 1; }

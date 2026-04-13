@@ -784,16 +784,19 @@
         </div>
       </div>
       <div class="reveal" style="transition-delay:.2s">
-        <div class="ct-form">
-          <div class="form-group"><label>Your Name</label><input type="text" placeholder="Rocky wen"></div>
-          <div class="form-group"><label>Email Address</label><input type="email" placeholder="Rocky@example.com"></div>
-          <div class="form-group"><label>Message</label><textarea placeholder="Hi Vraj, I would love to collaborate on..."></textarea></div>
-          <button class="form-btn" id="form-btn" onclick="handleForm(this)">SEND MESSAGE →</button>
+        <form class="ct-form" id="contact-form" action="https://formspree.io/f/xeevqkgn" method="POST">
+          <input type="hidden" name="_subject" value="Portfolio Contact Form Submission">
+          <input type="hidden" name="_language" value="en">
+          <div class="form-group"><label>Your Name</label><input type="text" name="name" placeholder="Rocky wen" required></div>
+          <div class="form-group"><label>Email Address</label><input type="email" name="email" placeholder="Rocky@example.com" required></div>
+          <div class="form-group"><label>Message</label><textarea name="message" placeholder="Hi Vraj, I would love to collaborate on..." required></textarea></div>
+          <button class="form-btn" id="form-btn" type="submit">SEND MESSAGE →</button>
+          <div class="form-response" id="form-response"></div>
           <a href="https://mail.google.com/mail/?view=cm&fs=1&to=vraj13122005@gmail.com&su=Portfolio%20Contact&body=Hi%20Vraj%2C%0A%0A" target="_blank" class="form-gmail-btn" id="form-gmail-btn">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.910 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
             Open in Gmail instead
           </a>
-        </div>
+        </form>
       </div>
     </div>
   </div>

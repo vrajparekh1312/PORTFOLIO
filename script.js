@@ -507,6 +507,84 @@ function showFormToast(message) {
   }, 5000);
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+  var contactForm = document.getElementById('contact-form');
+  if (!contactForm) return;
+  contactForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    submitContactForm(contactForm);
+  });
+});
+
+function submitContactForm(form) {
+  var name = form.querySelector('input[name="name"]').value.trim();
+  var email = form.querySelector('input[name="email"]').value.trim();
+  var message = form.querySelector('textarea[name="message"]').value.trim();
+  var responseEl = document.getElementById('form-response');
+  var submitBtn = document.getElementById('form-btn');
+
+  if (responseEl) {
+    responseEl.textContent = '';
+    responseEl.className = 'form-response';
+  }
+
+  if (!name || !email || !message) {
+    if (responseEl) {
+      responseEl.textContent = 'Please complete all fields before sending.';
+      responseEl.classList.add('error');
+    }
+    return;
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (responseEl) {
+      responseEl.textContent = 'Please enter a valid email address.';
+      responseEl.classList.add('error');
+    }
+    return;
+  }
+
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'SENDING...';
+  }
+
+  var formData = new FormData(form);
+  fetch(form.action, {
+    method: 'POST',
+    body: formData,
+    headers: { 'Accept': 'application/json' }
+  }).then(function (response) {
+    if (response.ok) {
+      if (responseEl) {
+        responseEl.textContent = '✅ Message sent successfully. I’ll get back to you soon!';
+        responseEl.classList.add('success');
+      }
+      form.reset();
+      if (submitBtn) submitBtn.textContent = 'SENT!';
+      setTimeout(function () {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'SEND MESSAGE →';
+        }
+      }, 3000);
+      return;
+    }
+    return response.json().then(function (data) {
+      throw new Error(data.error || 'Submission failed. Please try again.');
+    });
+  }).catch(function (error) {
+    if (responseEl) {
+      responseEl.textContent = '⚠️ ' + error.message;
+      responseEl.classList.add('error');
+    }
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'SEND MESSAGE →';
+    }
+  });
+}
+
 /* ── PROJECT MODALS ── */
 var MODALS = {
   cs: {
