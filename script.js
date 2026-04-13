@@ -662,10 +662,10 @@ document.addEventListener('keydown', function (e) {
 /* ── AI ASSISTANT ── */
 var AI_KB = {
   projects: "Vraj's 4 major projects:<br><br>• 🏆 <b>CitySolve</b> — Hackathon-winning civic issue platform with GPS<br>• 🤖 <b>Infer@</b> — AI document intelligence for Kochi Metro Rail<br>• 🌿 <b>HerbCure</b> — AI herbal medicine detection<br>• ⛏️ <b>EnviroMine</b> — Coal mine emission analyzer",
-  skills: "Tech stack:<br><br>• 💻 Python · Java · JavaScript · C<br>• 🌐 Node.js · Express.js · HTML/CSS<br>• 🗄️ MongoDB · MySQL<br>• ☁️ Google Cloud (GCP)<br>• 🤖 OpenCV · Tesseract OCR · AI/ML",
+  skills: "Tech stack:<br><br>• 💻 Python · Java · JavaScript · C<br>• 🌐 HTML/CSS · React · Next.js · Node.js · Express.js<br>• 🗄️ MongoDB · MySQL · Firebase<br>• ☁️ Google Cloud (GCP)<br>• 🤖 MERN · REST APIs · AI/ML",
   achievements: "• 🏆 <b>1st Place</b> CVMU 4.0 Hackathon<br>• ☁️ <b>4 Google Cloud Certifications</b><br>• 📊 <b>CPI: 8.79</b>",
   contact: "• 📧 vraj13122005@gmail.com<br>• 📞 +91 9316464837<br>• 🐙 github.com/vrajparekh1312<br>• 💼 linkedin.com/in/vraj-parekh-7b801b30b",
-  education: "• 🎓 <b>B.Tech CE</b> — MBIT, CVM University<br>• 📊 CPI: 8.79 · 10th: 91.43%",
+  education: "• 🎓 <b>B.Tech CE</b> — MBIT, CVM University<br>• 📊 CPI: 8.79 · strong Science foundation in HSC/SSC",
   def: "I can tell you about Vraj's <b>projects</b>, <b>skills</b>, <b>achievements</b>, <b>education</b>, or <b>contact</b> info. What would you like to know? 😊"
 };
 
@@ -680,7 +680,7 @@ function matchAI(q) {
   if (/achiev|award|hackathon|cert/.test(l)) return AI_KB.achievements;
   if (/contact|email|phone|linkedin|github|hire/.test(l)) return AI_KB.contact;
   if (/edu|college|cpi/.test(l)) return AI_KB.education;
-  if (/hi|hello|hey/.test(l)) return "Hey! 👋 Ask me about Vraj's <b>projects</b>, <b>skills</b>, or how to <b>hire him</b>!";
+  if (/hi|hello|hey/.test(l)) return "Hey! 👋 Ask me about Vraj's <b>projects</b>, <b>skills</b>, <b>education</b>, or how to <b>hire him</b>!";
   if (/who|vraj|about/.test(l)) return "Vraj Ashokbhai Parekh — CE student at MBIT (CPI: 8.79), AI developer, full-stack engineer, CVMU 4.0 Hackathon winner! 🚀";
   return AI_KB.def;
 }
