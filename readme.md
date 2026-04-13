@@ -1,116 +1,83 @@
-🌐 Vraj Parekh Portfolio Website
+🌐 Vraj Parekh — Developer Portfolio
 
-A modern interactive developer portfolio website built using HTML, CSS, JavaScript, and Three.js.
-This portfolio showcases projects, skills, achievements, and contact information with a futuristic UI and smooth animations.
+A modern, interactive portfolio website showcasing my work in Frontend Development, UI/UX, and AI-driven solutions.
+Built with a futuristic design, smooth animations, and immersive user experience.
 
-The website includes advanced UI features such as 3D effects, animated backgrounds, custom cursor, AI assistant, and developer mode to create a unique user experience.
+🔗 Live Website:
+👉 https://vrajparekh1312.github.io/
 
-🚀 Live Demo
-
-🔗 Website:
-https://vrajparekh1312.github.io/
-
-✨ Features
-🎨 Modern UI/UX
-Futuristic developer-style interface
-Neon gradients and animated backgrounds
-Smooth scrolling and section transitions
-🧠 Interactive Components
+✨ Highlights
+🎨 Futuristic UI/UX with neon gradients & smooth animations
+⚡ Fast & Responsive Design across all devices
+🧠 Interactive Features (custom cursor, scroll effects, loader)
+🤖 AI Assistant Integration for user interaction
+🖥 Hidden Developer Mode (Easter egg 👀)
+🌗 Dark/Light Mode Toggle
+🚀 Features
+🎨 Modern Interface
+Clean, developer-focused design
+Animated backgrounds & transitions
+Smooth scrolling experience
+🧠 Interactive Experience
 Custom animated cursor
 Scroll progress indicator
-Loader animation
+Dynamic typing animation
 🤖 AI Assistant
-Built-in AI chat interface
-Interactive responses for visitors
+Built-in chat interface
+Interactive responses
 🖥 Developer Mode
-Hidden Developer Terminal
+Hidden terminal interface
 Unlock by clicking logo 5 times
-Coding challenge system
+Fun coding challenge system
 📊 Portfolio Sections
-Hero Section
-About Me
-Skills
-Projects
-Achievements
-Contact Form
-🌗 Theme Support
-Dark Mode
-Light Mode toggle
-🛠 Technologies Used
-Technology	Purpose
-HTML5	Website structure
-CSS3	Styling and animations
+🧑‍💻 Hero — Introduction & quick overview
+📖 About — Background & journey
+🛠 Skills — Tech stack & tools
+🚀 Projects — Featured work
+🏆 Achievements — Hackathons & certifications
+📬 Contact — Connect with me
+🛠 Tech Stack
+Technology	Usage
+HTML5	Structure
+CSS3	Styling & Animations
 JavaScript	Interactivity
-Three.js	3D background effects
-Google Fonts	Modern typography
+Three.js	3D Visual Effects
+Google Fonts	Typography
 📂 Project Structure
-Portfolio
+Portfolio/
 │
 ├── index.html
-├── assets
-│   ├── images
-│   ├── icons
+├── assets/
+│   ├── images/
+│   └── icons/
 │
-├── css
+├── css/
 │   └── styles.css
 │
-├── js
+├── js/
 │   └── script.js
 │
 └── README.md
-
-(Your project currently contains most of the CSS and JS directly inside index.html.)
-
-📸 Portfolio Sections
-1️⃣ Hero Section
-Introduction
-Animated typing effect
-Resume and LinkedIn buttons
-2️⃣ About Section
-Personal information
-Education
-Timeline of achievements
-3️⃣ Skills Section
-
-Displays technical skills with animated progress bars.
-
-4️⃣ Projects Section
-
-Showcases featured projects with:
-
-Description
-Features
-Technology stack
-5️⃣ Achievements
-Hackathon wins
-Certifications
-6️⃣ Contact Section
-
-Visitors can contact using:
-
-Email
-LinkedIn
-Contact form
-⚙ Installation
+⚙️ Getting Started
 1️⃣ Clone the repository
-git clone https://github.com/yourusername/portfolio.git
-2️⃣ Open the folder
-cd portfolio
-3️⃣ Run the website
+git clone https://github.com/vrajparekh1312/PORTFOLIO.git
+2️⃣ Navigate to project
+cd PORTFOLIO
+3️⃣ Run locally
 
-Simply open:
+Open index.html in your browser
 
-index.html
-
-in your browser.
-
-📬 Contact
+📬 Connect With Me
 
 👨‍💻 Vraj Parekh
 
-LinkedIn:
+🔗 LinkedIn:
 https://www.linkedin.com/in/vraj-parekh-7b801b30b
+🌐 Portfolio:
+https://vrajparekh1312.github.io/
+⭐ Support
 
-⭐ If you like this project
+If you like this project:
 
-Please give it a star ⭐ on GitHub and share it with others!
+⭐ Star this repository
+🔁 Share it with others
