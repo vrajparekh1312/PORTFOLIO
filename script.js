@@ -319,7 +319,7 @@ var stObs = new IntersectionObserver(function (entries) {
 document.querySelectorAll('.stats-inner').forEach(function (s) { stObs.observe(s); });
 
 /* ── TYPING ANIMATION ── */
-var words = ['Software Developer', 'AI Enthusiast', 'Hackathon Winner', 'Problem Solver', 'Full-Stack Engineer'];
+var words = ['Software Developer', 'AI Enthusiast', 'CVMU Hackathon Winner', 'Problem Solver', 'Full-Stack Engineer'];
 var wi = 0, ci = 0, deleting = false;
 var typEl = document.getElementById('typing-text');
 
@@ -588,7 +588,7 @@ function submitContactForm(form) {
 /* ── PROJECT MODALS ── */
 var MODALS = {
   cs: {
-    tag: { cls: 'tag-w', text: '🏆 Hackathon Winner · 2024' },
+    tag: { cls: 'tag-w', text: '🏆 CVMU Hackathon Winner · 2024' },
     title: 'CitySolve', sub: 'Smart Civic Issue Reporting Platform — 1st Place, CVMU 4.0',
     overview: 'CitySolve bridges citizens and government through real-time civic issue reporting with GPS-tagged photos, authority dashboards, and live status tracking.',
     features: ['Citizens submit complaints with GPS location and photo evidence', 'Government authority dashboard for assigning and resolving issues', 'Real-time issue tracking and resolution workflow for citizens', 'Mobile Android companion app built with Kotlin', 'Scalable MongoDB backend with Express.js REST API'],
@@ -681,7 +681,7 @@ function matchAI(q) {
   if (/contact|email|phone|linkedin|github|hire/.test(l)) return AI_KB.contact;
   if (/edu|college|cpi/.test(l)) return AI_KB.education;
   if (/hi|hello|hey/.test(l)) return "Hey! 👋 Ask me about Vraj's <b>projects</b>, <b>skills</b>, <b>education</b>, or how to <b>hire him</b>!";
-  if (/who|vraj|about/.test(l)) return "Vraj Ashokbhai Parekh — CE student at MBIT (CPI: 8.79), AI developer, full-stack engineer, CVMU 4.0 Hackathon winner! 🚀";
+  if (/who|vraj|about/.test(l)) return "Vraj Ashokbhai Parekh — CE student at MBIT (CPI: 8.79), AI developer, full-stack engineer, CVMU 4.0 CVMU Hackathon Winner! 🚀";
   return AI_KB.def;
 }
 
@@ -929,7 +929,7 @@ var TERM_CMDS = {
       '<div>AI/ML | OpenCV | Tesseract OCR | Full-stack delivery</div>';
   },
   projects: function () {
-    return '<div class="tc-amber">🏆 CitySolve</div><div>&nbsp;&nbsp;&nbsp;Smart Civic Issue Reporting Platform — CVMU 4.0 Hackathon Winner</div>' +
+    return '<div class="tc-amber">🏆 CitySolve</div><div>&nbsp;&nbsp;&nbsp;Smart Civic Issue Reporting Platform — CVMU 4.0 CVMU Hackathon Winner</div>' +
       '<div class="tc-blue">🤖 Infer@</div><div>&nbsp;&nbsp;&nbsp;AI Document Intelligence for Kochi Metro Rail (SIH 2025)</div>' +
       '<div class="tc-green">🌿 HerbCure</div><div>&nbsp;&nbsp;&nbsp;AI Herbal Medicine Detection &amp; Recommendations</div>' +
       '<div class="tc-violet">⛏️ EnviroMine</div><div>&nbsp;&nbsp;&nbsp;Coal Mine Emission Analyzer &amp; Sustainability Platform</div>';
