@@ -917,8 +917,6 @@ body.light .ai-win { background: rgba(255,255,255,.97); box-shadow: 0 20px 60px 
 @keyframes emojiPop { from { transform: scale(0) rotate(-20deg); } to { transform: scale(1) rotate(0); } }
 .reward-title { font-family: var(--font-h); font-size: 1.4rem; font-weight: 900; color: #28ca40; margin-bottom: .6rem; letter-spacing: .04em; text-shadow: 0 0 30px rgba(40,202,64,.5); }
 .reward-msg { font-family: var(--font-m); font-size: .78rem; color: rgba(0,255,65,.7); line-height: 1.8; margin-bottom: .8rem; }
-.reward-badge { display: inline-block; padding: .4rem 1.2rem; border-radius: 100px; background: rgba(0,255,65,.1); border: 1px solid rgba(0,255,65,.3); font-family: var(--font-m); font-size: .72rem; color: #28ca40; letter-spacing: .1em; margin-bottom: 1.5rem; animation: badgePulse 2s ease-in-out infinite; }
-@keyframes badgePulse { 0%,100% { box-shadow: 0 0 10px rgba(0,255,65,.2); } 50% { box-shadow: 0 0 25px rgba(0,255,65,.5); } }
 .reward-confetti { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
 .reward-close-btn { background: rgba(0,255,65,.08); border: 1px solid rgba(0,255,65,.25); border-radius: 8px; padding: .6rem 1.6rem; font-family: var(--font-m); font-size: .74rem; color: #00ff41; cursor: pointer; transition: all .2s; letter-spacing: .08em; }
 .reward-close-btn:hover { background: rgba(0,255,65,.18); border-color: rgba(0,255,65,.5); }
