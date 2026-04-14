@@ -323,13 +323,19 @@ var words = ['Software Developer', 'AI Enthusiast', 'CVMU Hackathon Winner', 'Pr
 var wi = 0, ci = 0, deleting = false;
 var typEl = document.getElementById('typing-text');
 
+function renderTypedText(text) {
+  typEl.innerHTML = text.split('').map(function(ch, idx) {
+    return '<span style="--i:' + idx + '">' + (ch === ' ' ? '&nbsp;' : ch) + '</span>';
+  }).join('');
+}
+
 function type() {
   var w = words[wi];
   if (!deleting) {
-    typEl.textContent = w.slice(0, ++ci);
+    renderTypedText(w.slice(0, ++ci));
     if (ci === w.length) { deleting = true; setTimeout(type, 1800); return; }
   } else {
-    typEl.textContent = w.slice(0, --ci);
+    renderTypedText(w.slice(0, --ci));
     if (ci === 0) { deleting = false; wi = (wi + 1) % words.length; }
   }
   setTimeout(type, deleting ? 45 : 75);
