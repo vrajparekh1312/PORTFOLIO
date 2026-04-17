@@ -1,18 +1,19 @@
 🌐 Vraj Parekh — Developer Portfolio
 
-A modern, interactive portfolio website showcasing my work in Frontend Development, UI/UX, and AI-driven solutions.
+A modern, interactive portfolio showcasing my work in Frontend Development, UI/UX, and AI-driven solutions.
 Built with a futuristic design, smooth animations, and immersive user experience.
 
-🔗 Live Website:
-👉 https://vrajparekh1312.github.io/
+🔗 Live Website
+
+🌐 [https://vrajparekh.tech/](https://vrajparekh.tech/)
 
 ✨ Highlights
 🎨 Futuristic UI/UX with neon gradients & smooth animations
-⚡ Fast & Responsive Design across all devices
-🧠 Interactive Features (custom cursor, scroll effects, loader)
-🤖 AI Assistant Integration for user interaction
+⚡ Fast & responsive across all devices
+🧠 Interactive features (custom cursor, scroll effects, loader)
+🤖 AI assistant integration for user interaction
 🖥 Hidden Developer Mode (Easter egg 👀)
-🌗 Dark/Light Mode Toggle
+🌗 Dark / Light mode toggle
 🚀 Features
 🎨 Modern Interface
 Clean, developer-focused design
@@ -30,7 +31,7 @@ Hidden terminal interface
 Unlock by clicking logo 5 times
 Fun coding challenge system
 📊 Portfolio Sections
-🧑‍💻 Hero — Introduction & quick overview
+🧑‍💻 Hero — Introduction & overview
 📖 About — Background & journey
 🛠 Skills — Tech stack & tools
 🚀 Projects — Featured work
@@ -45,8 +46,8 @@ Three.js	3D Visual Effects
 Google Fonts	Typography
 📂 Project Structure
 Portfolio/
+│── index.html
 │
-├── index.html
 ├── assets/
 │   ├── images/
 │   └── icons/
@@ -71,10 +72,8 @@ Open index.html in your browser
 
 👨‍💻 Vraj Parekh
 
-🔗 LinkedIn:
-https://www.linkedin.com/in/vraj-parekh-7b801b30b
-🌐 Portfolio:
-https://vrajparekh1312.github.io/
+🔗 LinkedIn: https://www.linkedin.com/in/vraj-parekh-7b801b30b
+🌐 Portfolio: [https://vrajparekh.tech/](https://vrajparekh.tech/)
 ⭐ Support
 
 If you like this project:
