@@ -849,10 +849,29 @@ body.light .ai-hdr { border-bottom-color: rgba(37, 99, 235, 0.12); }
 .ai-hname { font-family: var(--font-m); font-size: .7rem; font-weight: 700; color: var(--neon); letter-spacing: .1em; }
 .ai-status { font-size: .6rem; color: #28ca40; font-family: var(--font-m); display: flex; align-items: center; gap: .3rem; margin-top: .1rem; }
 .ai-status-dot { width: 6px; height: 6px; border-radius: 50%; background: #28ca40; box-shadow: 0 0 4px rgba(40,202,64,.65); animation: aiDotPulse 3.5s cubic-bezier(.4,0,.6,1) infinite; }
-.ai-hdr-close { margin-left: auto; cursor: pointer; color: rgba(255,255,255,.18); font-size: .85rem; transition: color .18s cubic-bezier(.4,0,.2,1); line-height: 1; padding: .2rem; }
-.ai-hdr-close:hover { color: var(--rose); }
-body.light .ai-hdr-close { color: rgba(6, 12, 30, 0.4); }
-body.light .ai-hdr-close:hover { color: var(--rose); }
+.ai-hdr-close {
+  appearance: none;
+  -webkit-appearance: none;
+  background: none !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  margin-left: auto !important;
+  cursor: pointer;
+  color: var(--t2) !important;
+  font-size: .95rem !important;
+  transition: color .18s cubic-bezier(.4,0,.2,1);
+  line-height: 1;
+  padding: .4rem !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.ai-hdr-close:hover {
+  color: var(--rose) !important;
+  background: rgba(244,63,94,.08) !important;
+}
 
 /* messages — minimal glow */
 .ai-msgs { padding: 1rem; max-height: 240px; overflow-y: auto; display: flex; flex-direction: column; gap: .6rem; }
@@ -869,48 +888,71 @@ body.light .ai-usr { background: linear-gradient(135deg,rgba(37, 99, 235, 0.12),
 /* suggestions chips */
 .ai-suggests {
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap !important;
+  justify-content: flex-start;
+  align-items: center;
   gap: .45rem;
-  padding: .5rem .8rem;
+  padding: .6rem .8rem;
   overflow-x: auto;
   border-top: 1px solid rgba(79,163,255,.07);
-  background: rgba(255,255,255,.01);
+  background: rgba(13, 17, 23, 0.4);
   scrollbar-width: none;
-  transition: border-top-color .4s;
+  transition: border-top-color .4s, background-color .4s;
+  -webkit-overflow-scrolling: touch;
 }
 .ai-suggests::-webkit-scrollbar { display: none; }
-body.light .ai-suggests { border-top-color: rgba(37, 99, 235, 0.12); }
+body.light .ai-suggests {
+  border-top-color: rgba(37, 99, 235, 0.12);
+  background: rgba(248, 250, 252, 0.6);
+}
 .ai-suggests button {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   font-family: var(--font-m);
   font-size: .68rem;
-  color: var(--neon);
-  background: rgba(88,166,255,.07);
-  border: 1px solid rgba(88,166,255,.2);
-  border-radius: 100px;
-  padding: .25rem .7rem;
+  font-weight: 500;
+  color: var(--neon) !important;
+  background: rgba(88,166,255,.07) !important;
+  border: 1px solid rgba(88,166,255,.18) !important;
+  border-radius: 100px !important;
+  padding: .35rem .75rem !important;
+  height: 28px !important;
   cursor: pointer;
   white-space: nowrap;
-  transition: all .2s;
+  transition: all .2s cubic-bezier(.4, 0, .2, 1);
+  flex-shrink: 0 !important;
+  box-sizing: border-box;
+  margin: 0;
+  outline: none;
 }
 .ai-suggests button:hover {
-  background: var(--neon);
-  color: #fff;
-  border-color: var(--neon);
-  box-shadow: 0 0 10px rgba(88,166,255,.3);
+  background: var(--neon) !important;
+  color: #fff !important;
+  border-color: var(--neon) !important;
+  box-shadow: 0 0 12px rgba(88,166,255,.35) !important;
+  transform: translateY(-1px);
 }
 body.light .ai-suggests button {
-  background: rgba(37,99,235,.07);
-  border-color: rgba(37,99,235,.2);
+  background: rgba(37,99,235,.06) !important;
+  border-color: rgba(37,99,235,.15) !important;
 }
 body.light .ai-suggests button:hover {
-  background: var(--neon);
-  color: #fff;
-  border-color: var(--neon);
+  background: var(--neon) !important;
+  color: #fff !important;
+  border-color: var(--neon) !important;
+  box-shadow: 0 0 12px rgba(37,99,235,.25) !important;
+  transform: translateY(-1px);
 }
 .ai-suggests button::before {
-  margin-right: 0.3rem;
-  font-size: 0.75rem;
+  margin-right: 0.35rem;
+  font-size: 0.72rem;
+  line-height: 1;
+  display: inline-block;
 }
 .chip-achievements::before { content: "🏆"; }
 .chip-projects::before { content: "🚀"; }
