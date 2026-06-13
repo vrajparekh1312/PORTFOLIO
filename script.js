@@ -12,6 +12,35 @@ var termHistory = [];
 var termHistIdx = -1;
 var selectedChoice = null;
 
+/* ── PERFORMANCE UTILITIES ── */
+function rafThrottle(fn) {
+  var ticked = false;
+  return function () {
+    var args = arguments;
+    var context = this;
+    if (!ticked) {
+      window.requestAnimationFrame(function () {
+        fn.apply(context, args);
+        ticked = false;
+      });
+      ticked = true;
+    }
+  };
+}
+
+var cachedRects = new Map();
+function getCachedRect(el) {
+  if (!cachedRects.has(el)) {
+    cachedRects.set(el, el.getBoundingClientRect());
+  }
+  return cachedRects.get(el);
+}
+function clearRectCache() {
+  cachedRects.clear();
+}
+window.addEventListener('resize', rafThrottle(clearRectCache));
+window.addEventListener('scroll', rafThrottle(clearRectCache));
+
 /* ── JOURNEY DRAG SCROLL ── */
 window.addEventListener('load', function () {
   var themeBtn = document.getElementById('theme-btn');
@@ -50,7 +79,7 @@ window.addEventListener('load', function () {
   }
   // Run after a short delay to let layout settle, and on resize
   setTimeout(positionTimelineLine, 300);
-  window.addEventListener('resize', positionTimelineLine);
+  window.addEventListener('resize', rafThrottle(positionTimelineLine));
 });
 
 /* ── LOADER ── */
@@ -199,11 +228,11 @@ function initThree() {
     mousX = (e.clientX / window.innerWidth - 0.5) * 2;
     mousY = (e.clientY / window.innerHeight - 0.5) * 2;
   });
-  window.addEventListener('resize', function () {
+  window.addEventListener('resize', rafThrottle(function () {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
-  });
+  }));
 
   function animThree() {
     requestAnimationFrame(animThree);
@@ -229,7 +258,7 @@ function initParticles() {
 
   function resizeP() { pCv.width = window.innerWidth; pCv.height = window.innerHeight; }
   resizeP();
-  window.addEventListener('resize', resizeP);
+  window.addEventListener('resize', rafThrottle(resizeP));
 
   for (var i = 0; i < 70; i++) {
     pts.push({ x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight, vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25, r: Math.random() * 1.4 + 0.5, c: Math.random() > 0.5 ? '79,163,255' : '168,85,247' });
@@ -281,11 +310,12 @@ document.querySelectorAll('a, button, .pj-card').forEach(function (el) {
 });
 
 /* ── SCROLL PROGRESS ── */
-window.addEventListener('scroll', function () {
-  var s = document.documentElement.scrollTop;
+window.addEventListener('scroll', rafThrottle(function () {
+  var s = document.documentElement.scrollTop || document.body.scrollTop;
   var h = document.documentElement.scrollHeight - window.innerHeight;
-  document.getElementById('pg').style.width = (s / h * 100) + '%';
-});
+  var pg = document.getElementById('pg');
+  if (pg && h > 0) pg.style.width = (s / h * 100) + '%';
+}));
 
 /* ── REVEAL ON SCROLL ── */
 var revObs = new IntersectionObserver(function (entries) {
@@ -351,7 +381,7 @@ var c3d = document.getElementById('card3d');
 if (c3d) {
   var wrap3d = c3d.parentElement;
   wrap3d.addEventListener('mousemove', function (e) {
-    var r = wrap3d.getBoundingClientRect();
+    var r = getCachedRect(wrap3d);
     var x = (e.clientX - r.left - r.width / 2) / (r.width / 2);
     var y = (e.clientY - r.top - r.height / 2) / (r.height / 2);
     c3d.style.transform = 'rotateY(' + (x * 12) + 'deg) rotateX(' + (-y * 10) + 'deg)';
@@ -361,7 +391,7 @@ if (c3d) {
 
 /* ── PROJECT CARD MOUSE GLOW ── */
 function pjGlow(e, el) {
-  var r = el.getBoundingClientRect();
+  var r = getCachedRect(el);
   el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
   el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
 }
@@ -669,9 +699,9 @@ var MODALS = {
     title: 'CodeAlpha Internship', sub: 'Frontend Development Projects & Tasks',
     overview: 'A series of front-end applications developed during the Frontend Development Internship at CodeAlpha, designed with responsive layouts and interactive features.',
     features: [
-      '<b>Responsive Calculator 🧮</b>: Supports full arithmetic operation flow with clean layout and decimal calculations.',
-      '<b>MELO Music Player 🎧</b>: Interactive web player featuring play/pause, volume control, track progress bar, and zero latency playback.',
-      '<b>Portfolio Website 🌐</b>: Designed a modern responsive layout to display projects and resume details.'
+      '<b>Responsive Calculator</b>: Supports full arithmetic operation flow with clean layout and decimal calculations.',
+      '<b>MELO Music Player</b>: Interactive web player featuring play/pause, volume control, track progress bar, and zero latency playback.',
+      '<b>Portfolio Website</b>: Designed a modern responsive layout to display projects and resume details.'
     ],
     stack: ['HTML5', 'CSS3', 'JavaScript (ES6)'],
     lives: [

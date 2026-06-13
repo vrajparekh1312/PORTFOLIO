@@ -3,42 +3,42 @@
    ==================================================== */
 
 :root {
-  --bg: #030407;
-  --layer: #06090f;
-  --card: rgba(11, 18, 32, 0.82);
-  --neon: #4fa3ff;
+  --bg: #0D1117;
+  --layer: #161B22;
+  --card: rgba(22, 27, 34, 0.85);
+  --neon: #58A6FF;
   --violet: #a855f7;
-  --teal: #06d6a0;
+  --teal: #58a6ff; /* Match accent style */
   --amber: #fbbf24;
   --rose: #f43f5e;
-  --rim: rgba(255,255,255,.06);
-  --rim2: rgba(255,255,255,.12);
-  --t1: #e8eef8;
-  --t2: #7a88a8;
-  --t3: #3a4560;
-  --gn: 0 0 40px rgba(79,163,255,.22);
+  --rim: rgba(255,255,255,.08);
+  --rim2: rgba(255,255,255,.15);
+  --t1: #C9D1D9;
+  --t2: #8B949E;
+  --t3: #484F58;
+  --gn: 0 0 40px rgba(88,166,255,.22);
   --gv: 0 0 40px rgba(168,85,247,.22);
-  --card-shadow: 0 4px 24px rgba(0,0,0,.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,.25);
   --font-h: 'Orbitron', sans-serif;
   --font-b: 'Space Grotesk', sans-serif;
   --font-m: 'JetBrains Mono', monospace;
 }
 
 body.light {
-  --bg: #eef2fc;
-  --layer: #e2eaf8;
-  --card: rgba(212, 221, 245, 0.82);
-  --neon: #2563eb;
+  --bg: #F8FAFC;
+  --layer: #F1F5F9;
+  --card: rgba(255, 255, 255, 0.85);
+  --neon: #2563EB;
   --violet: #7c3aed;
-  --teal: #0d9488;
-  --rim: rgba(0,0,0,.1);
-  --rim2: rgba(0,0,0,.16);
-  --t1: #060c1e;
-  --t2: #374266;
-  --t3: #7a8aaa;
+  --teal: #2563EB;
+  --rim: rgba(0,0,0,.08);
+  --rim2: rgba(0,0,0,.15);
+  --t1: #0F172A;
+  --t2: #475569;
+  --t3: #64748B;
   --gn: none;
   --gv: none;
-  --card-shadow: 0 4px 20px rgba(0,0,0,.10), 0 1px 4px rgba(0,0,0,.08);
+  --card-shadow: 0 4px 20px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.05);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -58,6 +58,15 @@ body::before {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: linear-gradient(var(--neon),var(--violet)); border-radius: 3px; }
 ::selection { background: rgba(79,163,255,.25); }
+
+/* Focus outline for keyboard navigators */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--neon) !important;
+  outline-offset: 4px !important;
+}
 
 /* ── LOADER ── */
 #loader {

@@ -12,20 +12,30 @@
   <meta property="og:url" content="https://vrajparekh.tech/">
   <meta property="og:title" content="Vraj Parekh — Portfolio">
   <meta property="og:description" content="CE student, AI developer, and full-stack engineer. Hackathon Winner building intelligent civic & healthcare solutions.">
-  <meta property="og:image" content="https://vrajparekh.tech/vraj-profile.png">
+  <meta property="og:image" content="https://vrajparekh.tech/assets/vraj-profile.webp">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://vrajparekh.tech/">
   <meta property="twitter:title" content="Vraj Parekh — Portfolio">
   <meta property="twitter:description" content="CE student, AI developer, and full-stack engineer. Hackathon Winner building intelligent civic & healthcare solutions.">
-  <meta property="twitter:image" content="https://vrajparekh.tech/vraj-profile.png">
+  <meta property="twitter:image" content="https://vrajparekh.tech/assets/vraj-profile.webp">
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <meta name="theme-color" content="#0D1117">
 
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<script>
+  (function() {
+    var savedTheme = localStorage.getItem('theme');
+    var isDark = savedTheme ? (savedTheme === 'dark') : true;
+    if (!isDark) document.body.classList.add('light');
+  })();
+</script>
 
 <!-- LOADING SCREEN -->
 <div id="loader">
@@ -108,10 +118,10 @@
     <li><a href="#contact">Contact</a></li>
   </ul>
   <div class="nav-end">
-    <button class="icon-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle theme">☀️</button>
-    <button class="icon-btn" onclick="openTerminal()" title="Terminal [Ctrl+~]">⌨️</button>
+    <button class="icon-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle light and dark mode">☀️</button>
+    <button class="icon-btn" onclick="openTerminal()" title="Terminal [Ctrl+~]" aria-label="Open terminal console">⌨️</button>
     <a href="https://www.linkedin.com/in/vraj-parekh-7b801b30b" target="_blank" class="nav-btn">Hire Me</a>
-    <div class="ham" id="ham" onclick="toggleMobNav()"><span></span><span></span><span></span></div>
+    <div class="ham" id="ham" onclick="toggleMobNav()" aria-label="Toggle mobile menu" role="button" tabindex="0"><span></span><span></span><span></span></div>
   </div>
 </nav>
 <!-- TERMINAL HINT BUBBLE -->
@@ -119,7 +129,7 @@
 
 <!-- MOBILE NAV -->
 <div class="mob-nav" id="mob-nav">
-  <button class="mob-close" onclick="toggleMobNav()">✕</button>
+  <button class="mob-close" onclick="toggleMobNav()" aria-label="Close mobile navigation menu">✕</button>
   <a href="#about" onclick="toggleMobNav()">About</a>
   <a href="#journey" onclick="toggleMobNav()">Journey</a>
   <a href="#education" onclick="toggleMobNav()">Education</a>
@@ -155,7 +165,7 @@
       <div class="card-3d-wrap">
         <div class="card-3d" id="card3d">
           <div class="photo-wrap">
-            <img src="vraj-profile.png" alt="Vraj Parekh" class="photo-img" onerror="this.src='';this.style.display='none';document.querySelector('.photo-fallback').style.display='flex'">
+            <img src="assets/vraj-profile.webp" width="160" height="160" alt="Vraj Parekh" class="photo-img" onerror="this.src='';this.style.display='none';document.querySelector('.photo-fallback').style.display='flex'">
             <div class="photo-fallback">
               <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" style="color:#4fa3ff;opacity:.7"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </div>
@@ -306,7 +316,7 @@
           <div class="htl-connector"></div>
           <div class="htl-card htl-card--teal htl-card--project">
             <div class="htl-proj-logo-wrap">
-              <img src="enviromine_logo.png" alt="EnviroMine" class="htl-proj-logo" onerror="this.style.display='none';this.parentElement.querySelector('.htl-logo-fallback').style.display='flex'">
+              <img src="assets/enviromine_logo.webp" alt="EnviroMine" class="htl-proj-logo" loading="lazy" onerror="this.style.display='none';this.parentElement.querySelector('.htl-logo-fallback').style.display='flex'">
               <div class="htl-logo-fallback" style="display:none">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#06d6a0" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
               </div>
@@ -335,7 +345,7 @@
           <div class="htl-connector"></div>
           <div class="htl-card htl-card--green htl-card--project">
             <div class="htl-proj-logo-wrap">
-              <img src="herbcure_logo.png" alt="HerbCure" class="htl-proj-logo" onerror="this.style.display='none';this.parentElement.querySelector('.htl-logo-fallback').style.display='flex'">
+              <img src="assets/herbcure_logo.png" alt="HerbCure" class="htl-proj-logo" loading="lazy" onerror="this.style.display='none';this.parentElement.querySelector('.htl-logo-fallback').style.display='flex'">
               <div class="htl-logo-fallback" style="display:none">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/></svg>
               </div>
@@ -363,7 +373,7 @@
           <div class="htl-connector"></div>
           <div class="htl-card htl-card--blue htl-card--project">
             <div class="htl-proj-logo-wrap htl-proj-logo-wrap--dark">
-              <img src="infera_logo.png" alt="Infer@" class="htl-proj-logo" onerror="this.style.display='none';this.parentElement.querySelector('.htl-logo-fallback').style.display='flex'">
+              <img src="assets/infera_logo.png" alt="Infer@" class="htl-proj-logo" loading="lazy" onerror="this.style.display='none';this.parentElement.querySelector('.htl-logo-fallback').style.display='flex'">
               <div class="htl-logo-fallback" style="display:none">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4fa3ff" stroke-width="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/></svg>
               </div>
@@ -381,7 +391,7 @@
           <div class="htl-connector"></div>
           <div class="htl-card htl-card--gold htl-card--project">
             <div class="htl-proj-logo-wrap">
-              <img src="citysolve_logo.png" alt="CitySolve" class="htl-proj-logo" onerror="this.style.display='none';this.parentElement.querySelector('.htl-logo-fallback').style.display='flex'">
+              <img src="assets/citysolve_logo.webp" alt="CitySolve" class="htl-proj-logo" loading="lazy" onerror="this.style.display='none';this.parentElement.querySelector('.htl-logo-fallback').style.display='flex'">
               <div class="htl-logo-fallback" style="display:none">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
               </div>
@@ -420,7 +430,7 @@
       <!-- MBIT Card -->
       <div class="edu-card reveal" style="transition-delay:.1s">
         <div class="edu-logo-wrap">
-          <img src="mbit-logo.png" alt="MBIT" class="edu-logo"
+          <img src="assets/mbit-logo.png" alt="MBIT" class="edu-logo" loading="lazy"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="edu-logo-fallback" style="display:none">
             <div class="edu-logo-initials">MBIT</div>
@@ -438,7 +448,7 @@
       <!-- HSC Card -->
       <div class="edu-card reveal" style="transition-delay:.15s">
         <div class="edu-logo-wrap">
-          <img src="rptp-logo.jpg" alt="RPTP Vidhyalay" class="edu-logo"
+          <img src="assets/rptp-logo.jpg" alt="RPTP Vidhyalay" class="edu-logo" loading="lazy"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="edu-logo-fallback" style="display:none">
             <div class="edu-logo-initials">HSC</div>
@@ -456,7 +466,7 @@
       <!-- SSC Card -->
       <div class="edu-card reveal" style="transition-delay:.2s">
         <div class="edu-logo-wrap">
-          <img src="gyanyagna-logo.png" alt="Gyanyagna School" class="edu-logo"
+          <img src="assets/gyanyagna-logo.png" alt="Gyanyagna School" class="edu-logo" loading="lazy"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="edu-logo-fallback" style="display:none">
             <div class="edu-logo-initials">SSC</div>
@@ -485,19 +495,19 @@
       <div class="sk-card reveal" style="transition-delay:.1s">
         <div class="sk-head">Languages &amp; AI</div>
         <div class="skill-list">
-          <div class="skill-item"><span class="skill-icon skill-python"><img src="assets/Python.svg" alt="Python"></span><span>Python</span></div>
-          <div class="skill-item"><span class="skill-icon skill-java"><img src="assets/Java.svg" alt="Java"></span><span>Java</span></div>
-          <div class="skill-item"><span class="skill-icon skill-js"><img src="assets/JavaScript.svg" alt="JavaScript"></span><span>JavaScript</span></div>
-          <div class="skill-item"><span class="skill-icon skill-c"><img src="assets/C.svg" alt="C"></span><span>C</span></div>
+          <div class="skill-item"><span class="skill-icon skill-python"><img src="assets/Python.svg" alt="Python" loading="lazy" width="28" height="28"></span><span>Python</span></div>
+          <div class="skill-item"><span class="skill-icon skill-java"><img src="assets/Java.svg" alt="Java" loading="lazy" width="28" height="28"></span><span>Java</span></div>
+          <div class="skill-item"><span class="skill-icon skill-js"><img src="assets/JavaScript.svg" alt="JavaScript" loading="lazy" width="28" height="28"></span><span>JavaScript</span></div>
+          <div class="skill-item"><span class="skill-icon skill-c"><img src="assets/C.svg" alt="C" loading="lazy" width="28" height="28"></span><span>C</span></div>
           <div class="skill-item"><span class="skill-icon skill-ai"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#a855f7" stroke-width="2"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/><circle cx="12" cy="12" r="4"/></svg></span><span>AI &amp; LLMs (Gemini/LangChain) (Ongoing)</span></div>
         </div>
       </div>  
       <div class="sk-card reveal" style="transition-delay:.15s">
         <div class="sk-head">Frontend</div>
         <div class="skill-list">
-          <div class="skill-item"><span class="skill-icon skill-htmlcss"><img src="assets/HTML5.svg" alt="HTML & CSS"></span><span>HTML &amp; CSS</span></div>
-          <div class="skill-item"><span class="skill-icon skill-react"><img src="assets/React.svg" alt="React"></span><span>React</span></div>
-          <div class="skill-item"><span class="skill-icon skill-next"><img src="assets/Next.js.svg" alt="Next.js"></span><span>Next.js</span></div>
+          <div class="skill-item"><span class="skill-icon skill-htmlcss"><img src="assets/HTML5.svg" alt="HTML & CSS" loading="lazy" width="28" height="28"></span><span>HTML &amp; CSS</span></div>
+          <div class="skill-item"><span class="skill-icon skill-react"><img src="assets/React.svg" alt="React" loading="lazy" width="28" height="28"></span><span>React</span></div>
+          <div class="skill-item"><span class="skill-icon skill-next"><img src="assets/Next.js.svg" alt="Next.js" loading="lazy" width="28" height="28"></span><span>Next.js</span></div>
           <div class="skill-item"><span class="skill-icon skill-tailwind"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.336,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.336,13.382,8.976,12,6.001,12z" fill="#06B6D4"/></svg></span><span>Tailwind CSS</span></div>
           <div class="skill-item"><span class="skill-icon skill-uiux"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M8 24c2.208 0 4-1.792 4-4v-4H8c-2.208 0-4 1.792-4 4s1.792 4 4 4z" fill="#0ACF83"/><path d="M4 12c0-2.208 1.792-4 4-4h4v8H8c-2.208 0-4-1.792-4-4z" fill="#A259FF"/><path d="M4 4c0-2.208 1.792-4 4-4h4v8H8C5.792 8 4 6.208 4 4z" fill="#F24E1E"/><path d="M12 0h4c2.208 0 4 1.792 4 4s-1.792 4-4 4h-4V0z" fill="#FF7262"/><circle cx="16" cy="12" r="4" fill="#1ABCFE"/></svg></span><span>UI / UX</span></div>
         </div>
@@ -505,18 +515,18 @@
       <div class="sk-card reveal" style="transition-delay:.2s">
         <div class="sk-head">Databases</div>
         <div class="skill-list">
-          <div class="skill-item"><span class="skill-icon skill-mongo"><img src="assets/MongoDB.svg" alt="MongoDB"></span><span>MongoDB</span></div>
-          <div class="skill-item"><span class="skill-icon skill-mysql"><img src="assets/MySQL.svg" alt="MySQL"></span><span>MySQL</span></div>
-          <div class="skill-item"><span class="skill-icon skill-firebase"><img src="assets/Firebase.svg" alt="Firebase"></span><span>Firebase</span></div>
+          <div class="skill-item"><span class="skill-icon skill-mongo"><img src="assets/MongoDB.svg" alt="MongoDB" loading="lazy" width="28" height="28"></span><span>MongoDB</span></div>
+          <div class="skill-item"><span class="skill-icon skill-mysql"><img src="assets/MySQL.svg" alt="MySQL" loading="lazy" width="28" height="28"></span><span>MySQL</span></div>
+          <div class="skill-item"><span class="skill-icon skill-firebase"><img src="assets/Firebase.svg" alt="Firebase" loading="lazy" width="28" height="28"></span><span>Firebase</span></div>
         </div>
       </div>
       <div class="sk-card reveal" style="transition-delay:.25s">
         <div class="sk-head">MERN / Backend</div>
         <div class="skill-list">
-          <div class="skill-item"><span class="skill-icon skill-node"><img src="assets/Node.js.svg" alt="Node.js"></span><span>Node.js</span></div>
-          <div class="skill-item"><span class="skill-icon skill-express"><img src="assets/Express.svg" alt="Express"></span><span>Express</span></div>
-          <div class="skill-item"><span class="skill-icon skill-mern"><img src="assets/mern.png" alt="MERN"></span><span>MERN Stack (Ongoing)</span></div>
-          <div class="skill-item"><span class="skill-icon skill-api"><img src="assets/rest.webp" alt="REST APIs"></span><span>REST APIs</span></div>
+          <div class="skill-item"><span class="skill-icon skill-node"><img src="assets/Node.js.svg" alt="Node.js" loading="lazy" width="28" height="28"></span><span>Node.js</span></div>
+          <div class="skill-item"><span class="skill-icon skill-express"><img src="assets/Express.svg" alt="Express" loading="lazy" width="28" height="28"></span><span>Express</span></div>
+          <div class="skill-item"><span class="skill-icon skill-mern"><img src="assets/mern.png" alt="MERN" loading="lazy" width="28" height="28"></span><span>MERN Stack (Ongoing)</span></div>
+          <div class="skill-item"><span class="skill-icon skill-api"><img src="assets/rest.webp" alt="REST APIs" loading="lazy" width="28" height="28"></span><span>REST APIs</span></div>
         </div>
       </div>
     </div>
@@ -539,7 +549,7 @@
           CVMU Hackathon Winner
         </div>
         <div class="pj-logo-row">
-          <img src="citysolve_logo.png" alt="CitySolve" class="pj-logo"
+          <img src="assets/citysolve_logo.webp" alt="CitySolve" class="pj-logo" loading="lazy"
                onerror="this.style.display='none';this.parentElement.querySelector('.pj-logo-fallback').style.display='flex'">
           <div class="pj-logo-fallback" style="display:none">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -569,7 +579,7 @@
           AI · Enterprise
         </div>
         <div class="pj-logo-row pj-logo-row--dark">
-          <img src="infera_logo.png" alt="Infer@" class="pj-logo"
+          <img src="assets/infera_logo.png" alt="Infer@" class="pj-logo" loading="lazy"
                onerror="this.style.display='none';this.parentElement.querySelector('.pj-logo-fallback').style.display='flex'">
           <div class="pj-logo-fallback" style="display:none">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="1.5"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/></svg>
@@ -599,7 +609,7 @@
           AI · Healthcare
         </div>
         <div class="pj-logo-row">
-          <img src="herbcure_logo.png" alt="HerbCure" class="pj-logo"
+          <img src="assets/herbcure_logo.png" alt="HerbCure" class="pj-logo" loading="lazy"
                onerror="this.style.display='none';this.parentElement.querySelector('.pj-logo-fallback').style.display='flex'">
           <div class="pj-logo-fallback" style="display:none">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#06d6a0" stroke-width="1.5"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/></svg>
@@ -628,7 +638,7 @@
           Sustainability · AI
         </div>
         <div class="pj-logo-row">
-          <img src="enviromine_logo.png" alt="EnviroMine" class="pj-logo"
+          <img src="assets/enviromine_logo.webp" alt="EnviroMine" class="pj-logo" loading="lazy"
                onerror="this.style.display='none';this.parentElement.querySelector('.pj-logo-fallback').style.display='flex'">
           <div class="pj-logo-fallback" style="display:none">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#06d6a0" stroke-width="1.5"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
@@ -658,7 +668,7 @@
           Internship · E-Learning
         </div>
         <div class="pj-logo-row">
-          <img src="kidscode.png" alt="KidsCode" class="pj-logo"
+          <img src="assets/kidscode.webp" alt="KidsCode" class="pj-logo" loading="lazy"
                onerror="this.style.display='none';this.parentElement.querySelector('.pj-logo-fallback').style.display='flex'">
           <div class="pj-logo-fallback" style="display:none">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="1.5">
@@ -671,8 +681,8 @@
         <h3 class="pj-title">KidsCode</h3>
         <p class="pj-sub">Gamified E-Learning Platform</p>
         <ul class="pj-feats">
-          <li>Gamified programming tracks &amp; XP tracking 🎮</li>
-          <li>Screen time limits &amp; parent dashboard 🛡️</li>
+          <li>Gamified programming tracks &amp; XP tracking</li>
+          <li>Screen time limits &amp; parent dashboard</li>
           <li>OTP Brevo authentication &amp; secure backend</li>
           <li>Interactive learning exercises &amp; custom editor</li>
         </ul>
@@ -691,7 +701,7 @@
           Internship · Frontend
         </div>
         <div class="pj-logo-row">
-          <img src="codealpha.png" alt="CodeAlpha" class="pj-logo"
+          <img src="assets/codealpha.webp" alt="CodeAlpha" class="pj-logo" loading="lazy"
                onerror="this.style.display='none';this.parentElement.querySelector('.pj-logo-fallback').style.display='flex'">
           <div class="pj-logo-fallback" style="display:none">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="1.5">
@@ -703,9 +713,9 @@
         <h3 class="pj-title">CodeAlpha Internship</h3>
         <p class="pj-sub">Frontend Development Tasks</p>
         <ul class="pj-feats">
-          <li>Task 1: Simple &amp; Responsive Calculator 🧮</li>
-          <li>Task 2: Modern Web Music Player 🎧 (MELO)</li>
-          <li>Task 3: Personal Portfolio Website 🌐</li>
+          <li>Task 1: Simple &amp; Responsive Calculator</li>
+          <li>Task 2: Modern Web Music Player (MELO)</li>
+          <li>Task 3: Personal Portfolio Website</li>
           <li>Clean UI/UX &amp; responsive layouts built with JS</li>
         </ul>
         <div class="pj-stack"><span class="tech-pill">HTML5</span><span class="tech-pill">CSS3</span><span class="tech-pill">JavaScript (ES6)</span></div>
@@ -835,9 +845,9 @@
         <form class="ct-form" id="contact-form" action="https://formspree.io/f/xeevqkgn" method="POST">
           <input type="hidden" name="_subject" value="Portfolio Contact Form Submission">
           <input type="hidden" name="_language" value="en">
-          <div class="form-group"><label>Your Name</label><input type="text" name="name" placeholder="Rocky wen" required></div>
-          <div class="form-group"><label>Email Address</label><input type="email" name="email" placeholder="Rocky@example.com" required></div>
-          <div class="form-group"><label>Message</label><textarea name="message" placeholder="Hi Vraj, I would love to collaborate on..." required></textarea></div>
+          <div class="form-group"><label for="contact-name">Your Name</label><input type="text" id="contact-name" name="name" placeholder="Rocky wen" required autocomplete="name"></div>
+          <div class="form-group"><label for="contact-email">Email Address</label><input type="email" id="contact-email" name="email" placeholder="Rocky@example.com" required autocomplete="email"></div>
+          <div class="form-group"><label for="contact-message">Message</label><textarea id="contact-message" name="message" placeholder="Hi Vraj, I would love to collaborate on..." required></textarea></div>
           <button class="form-btn" id="form-btn" type="submit">SEND MESSAGE →</button>
           <div class="form-response" id="form-response"></div>
           <div class="form-gmail-box">
@@ -860,12 +870,12 @@
   <!-- CERTIFICATIONS ROW -->
   <div class="footer-certs">
     <a href="https://www.skills.google/public_profiles/4f53c608-01ef-4e86-9de0-86a43037fe8b" target="_blank" class="footer-cert-badge" title="Google Cloud Certifications">
-      <img src="assets/Google%20Cloud.svg" width="26" height="26" alt="Google Cloud">
+      <img src="assets/Google%20Cloud.svg" width="26" height="26" alt="Google Cloud" loading="lazy">
       <span>Google Cloud</span>
       <span class="footer-cert-count">3 Certs</span>
     </a>
     <a href="https://www.credly.com/badges/95a724c2-35e5-4bf3-bc31-f82d30bfe921/public_url" target="_blank" class="footer-cert-badge" title="AWS Cloud Foundations Certificate">
-      <img src="assets/AWS.svg" width="26" height="26" alt="AWS">
+      <img src="assets/AWS.svg" width="26" height="26" alt="AWS" loading="lazy">
       <span>AWS</span>
       <span class="footer-cert-count">1 Cert</span>
     </a>
@@ -927,7 +937,7 @@
         <div class="ai-hname">VP.AI ASSISTANT</div>
         <div class="ai-status"><span class="ai-status-dot"></span>ONLINE</div>
       </div>
-      <div class="ai-hdr-close" onclick="toggleAI()" title="Close">✕</div>
+      <button class="ai-hdr-close" onclick="toggleAI()" title="Close" aria-label="Close AI chatbot">✕</button>
     </div>
     <div class="ai-msgs" id="ai-msgs">
       <div class="ai-bot">Hi 👋 I'm Vraj's AI. Ask me about his <b>projects</b>, <b>skills</b>, <b>education</b>, <b>achievements</b>, or how to <b>contact him</b>!</div>
@@ -939,7 +949,7 @@
   </div>
 
   <!-- JARVIS bubble button -->
-  <button class="ai-bubble" onclick="toggleAI()" title="VP.AI Assistant">
+  <button class="ai-bubble" onclick="toggleAI()" title="VP.AI Assistant" aria-label="Toggle AI Assistant Chat">
     <div class="ai-bubble-core"></div>
     <svg width="30" height="30" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -981,7 +991,7 @@
 <!-- PROJECT MODAL -->
 <div id="modal-ov" onclick="closeModalBg(event)">
   <div class="modal-box" id="modal-box">
-    <button class="modal-close" onclick="closeModal()">✕</button>
+    <button class="modal-close" onclick="closeModal()" aria-label="Close details modal">✕</button>
     <div id="modal-content"></div>
   </div>
 </div>
@@ -992,7 +1002,7 @@
     <div class="dev-titlebar">
       <div class="dev-dots"><div class="dev-dot dd-r"></div><div class="dev-dot dd-y"></div><div class="dev-dot dd-g"></div></div>
       <div class="dev-ttitle">vraj@portfolio:~$ DEVELOPER_MODE</div>
-      <button class="dev-close-btn" onclick="closeDev()">✕ ESC</button>
+      <button class="dev-close-btn" onclick="closeDev()" aria-label="Close developer mode console">✕ ESC</button>
     </div>
     <div class="dev-body" id="dev-body"></div>
   </div>
@@ -1015,7 +1025,7 @@
     <div class="term-titlebar">
       <div class="term-dots"><div class="term-dot td-r"></div><div class="term-dot td-y"></div><div class="term-dot td-g"></div></div>
       <div class="term-title">vraj@portfolio ~ bash</div>
-      <button class="term-close-btn" onclick="closeTerm()">✕ ESC</button>
+      <button class="term-close-btn" onclick="closeTerm()" aria-label="Close terminal console">✕ ESC</button>
     </div>
     <div class="term-output" id="term-output">
       <div class="term-line"><span class="tc-green">vraj@portfolio</span><span class="tc-muted">:~$</span> <span style="color:#e8eef8">Welcome to Vraj Portfolio Terminal v2.0</span></div>
