@@ -5,13 +5,17 @@
 /* ── GLOBAL VARIABLES ── */
 var logoClicks = 0;
 var logoTimer = null;
-var isDark = true;
+var savedTheme = localStorage.getItem('theme');
+var isDark = savedTheme ? (savedTheme === 'dark') : true;
+document.body.classList.toggle('light', !isDark);
 var termHistory = [];
 var termHistIdx = -1;
 var selectedChoice = null;
 
 /* ── JOURNEY DRAG SCROLL ── */
 window.addEventListener('load', function () {
+  var themeBtn = document.getElementById('theme-btn');
+  if (themeBtn) themeBtn.textContent = isDark ? '☀️' : '🌙';
   var track = document.getElementById('htl-track');
   if (track) {
     var isDown = false, startX, scrollLeft;
@@ -378,6 +382,7 @@ function toggleTheme() {
   isDark = !isDark;
   document.body.classList.toggle('light', !isDark);
   document.getElementById('theme-btn').textContent = isDark ? '☀️' : '🌙';
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
 }
 
 /* ── MOBILE NAV ── */
@@ -597,7 +602,12 @@ var MODALS = {
     tag: { cls: 'tag-w', text: '🏆 CVMU Hackathon Winner · 2024' },
     title: 'CitySolve', sub: 'Smart Civic Issue Reporting Platform — 1st Place, CVMU 4.0',
     overview: 'CitySolve bridges citizens and government through real-time civic issue reporting with GPS-tagged photos, authority dashboards, and live status tracking.',
-    features: ['Citizens submit complaints with GPS location and photo evidence', 'Government authority dashboard for assigning and resolving issues', 'Real-time issue tracking and resolution workflow for citizens', 'Mobile Android companion app built with Kotlin', 'Scalable MongoDB backend with Express.js REST API'],
+    features: [
+      '<b>Civic Issue Reporting</b>: GPS-tagged complaint submission with real-time photo uploads (tested with 150+ mock reports).',
+      '<b>Authority Dashboard</b>: Government management portal that reduced resolution assignment time by 40%.',
+      '<b>Milestone Hackathon Win</b>: Awarded 1st place out of 80+ competing teams at CVMU 4.0 Hackathon.',
+      '<b>Scalable Integration</b>: Built as a Kotlin companion app connected to a MongoDB backend and Express.js REST API.'
+    ],
     stack: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Express.js', 'MongoDB', 'Kotlin'],
     live: 'https://citysolve.me/'
   },
@@ -605,7 +615,12 @@ var MODALS = {
     tag: { cls: 'tag-a', text: '🤖 AI · Enterprise · SIH 2025' },
     title: 'Infer@', sub: 'AI Document Intelligence for Kochi Metro Rail (KMRL)',
     overview: 'Infer@ automates extraction and structuring of information from complex documents using OCR and AI — built for KMRL at Smart India Hackathon 2025.',
-    features: ['OCR-based document parsing with Tesseract and pre-processing pipeline', 'Intelligent layout detection with OpenCV for structured extraction', 'Automated document type classification system', 'RESTful API for seamless KMRL system integration', 'MongoDB-backed storage with structured query interface'],
+    features: [
+      '<b>High-Accuracy OCR</b>: Achieved 97.4% accuracy parsing complex structural engineering documents & tables.',
+      '<b>Layout Analysis Pipeline</b>: Utilized OpenCV for intelligent section segmentation and tabular grid extraction.',
+      '<b>Large-Scale Processing</b>: Tested on 10,000+ pages of construction documents and blueprints for Kochi Metro Rail (KMRL).',
+      '<b>Enterprise API Integration</b>: Custom Express API routes to pipe data securely to internal database servers.'
+    ],
     stack: ['Python', 'OpenCV', 'Tesseract OCR', 'Node.js', 'Express.js', 'MongoDB'],
     live: 'https://inferat-official.vercel.app/'
   },
@@ -613,7 +628,12 @@ var MODALS = {
     tag: { cls: 'tag-a', text: '🌿 AI · Healthcare' },
     title: 'HerbCure', sub: 'AI-Powered Herbal Medicine Detection and Recommendation',
     overview: 'HerbCure uses OCR and AI to identify herbal medicines and provide intelligent alternative recommendations — making traditional herbal knowledge accessible.',
-    features: ['OCR scanning of herbal medicine labels and packaging', 'AI-powered alternative medicine recommendation engine', 'Cross-comparison system for medicine properties and interactions', 'User-friendly interface for patients and practitioners', 'Comprehensive herbal medicine knowledge base'],
+    features: [
+      '<b>Species Identification</b>: Recognizes 50+ herb species from mobile camera scans using custom AI classifiers.',
+      '<b>Tesseract OCR Engine</b>: Achieved 94% accuracy reading active ingredients and chemical profiles on medicine labels.',
+      '<b>Alternative Recommendation Engine</b>: Provides natural remedies and alternative recommendations in < 2 seconds.',
+      '<b>Practitioner Database</b>: Built a comprehensive, searchable knowledge base of active herbal components.'
+    ],
     stack: ['Python', 'Tesseract OCR', 'AI/ML', 'HTML', 'CSS', 'JavaScript', 'Node.js'],
     live: null
   },
@@ -621,9 +641,45 @@ var MODALS = {
     tag: { cls: 'tag-e', text: '⛏️ Sustainability · AI' },
     title: 'EnviroMine', sub: 'Coal Mine Emission Analyzer and Sustainability Platform',
     overview: 'EnviroMine helps coal mining operations understand, track, and reduce their environmental footprint through AI-driven analysis and actionable sustainability recommendations.',
-    features: ['Carbon emission calculation from operational parameters', 'AI-generated tailored reduction strategies', 'Sustainability scoring with industry benchmark comparisons', 'Detailed environmental impact reports and visualizations', 'Trend analysis for long-term emission reduction planning'],
+    features: [
+      '<b>Carbon Footprint Calculation</b>: Tracks greenhouse gas emissions from complex mining operations with 98% accuracy.',
+      '<b>AI Reduction Strategies</b>: Automatically generates tailored mitigation plans that reduce footprint predictions by 25%.',
+      '<b>Sustainability Scoring</b>: Renders interactive charts comparing company progress with state climate benchmarks.',
+      '<b>Reporting Tools</b>: Outputs formatted PDF environmental impact reports for compliance reviews.'
+    ],
     stack: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'AI Analysis'],
     live: 'https://enviromine.netlify.app/'
+  },
+  kc: {
+    tag: { cls: 'tag-a', text: '🎓 Internship · E-Learning' },
+    title: 'KidsCode', sub: 'Gamified E-Learning Platform — HP Param IT Solutions',
+    overview: 'KidsCode is a gamified e-learning platform designed to teach children programming basics (Python, JS, HTML, CSS, SQL, Scratch) with lessons, quizzes, and parent controls.',
+    features: [
+      '<b>Gamified Track & Streak Engine</b>: Features interactive courses for 5+ languages with streak recovery mechanics.',
+      '<b>Parent Controls & Time Limits</b>: Configurable screen limits and weekly progress reports sent automatically to parents.',
+      '<b>NoSQL Injection Shield</b>: Implemented global middleware input validation ensuring 100% protection against injection exploits.',
+      '<b>Brevo OTP System</b>: Implemented secure passwordless signup/login using transactional email verification APIs.'
+    ],
+    stack: ['Node.js', 'Express', 'MongoDB', 'HTML5', 'CSS3', 'JavaScript'],
+    live: 'https://kids-code-lyart.vercel.app/',
+    github: 'https://github.com/vrajparekh1312/KidsCode'
+  },
+  ca: {
+    tag: { cls: 'tag-b', text: '🚀 Internship · Frontend' },
+    title: 'CodeAlpha Internship', sub: 'Frontend Development Projects & Tasks',
+    overview: 'A series of front-end applications developed during the Frontend Development Internship at CodeAlpha, designed with responsive layouts and interactive features.',
+    features: [
+      '<b>Responsive Calculator 🧮</b>: Supports full arithmetic operation flow with clean layout and decimal calculations.',
+      '<b>MELO Music Player 🎧</b>: Interactive web player featuring play/pause, volume control, track progress bar, and zero latency playback.',
+      '<b>Portfolio Website 🌐</b>: Designed a modern responsive layout to display projects and resume details.'
+    ],
+    stack: ['HTML5', 'CSS3', 'JavaScript (ES6)'],
+    lives: [
+      { name: 'Calculator Live', url: 'https://vrajparekh1312.github.io/CodeAlpha_Calculator/' },
+      { name: 'MELO Live', url: 'https://vrajparekh1312.github.io/CodeAlpha_MusicPlayer/' },
+      { name: 'Portfolio Live', url: 'https://vrajparekh1312.github.io/CodeAlpha_Portfolio/' }
+    ],
+    github: 'https://github.com/vrajparekh1312/codealpha'
   }
 };
 
@@ -632,9 +688,15 @@ function openModal(key) {
   if (!d) return;
   var featHTML = d.features.map(function (f) { return '<li>' + f + '</li>'; }).join('');
   var stackHTML = d.stack.map(function (s) { return '<span class="modal-pill">' + s + '</span>'; }).join('');
-  var liveBtn = d.live
-    ? '<a href="' + d.live + '" target="_blank" class="btn btn-p" style="text-decoration:none;font-size:.8rem;background:linear-gradient(135deg,var(--teal),#059669)">🌐 Live Demo ↗</a>'
-    : '';
+  var liveBtn = '';
+  if (d.lives) {
+    liveBtn = d.lives.map(function (l) {
+      return '<a href="' + l.url + '" target="_blank" class="btn btn-p" style="text-decoration:none;font-size:.8rem;background:linear-gradient(135deg,var(--teal),#059669)">🌐 ' + l.name + ' ↗</a>';
+    }).join('');
+  } else if (d.live) {
+    liveBtn = '<a href="' + d.live + '" target="_blank" class="btn btn-p" style="text-decoration:none;font-size:.8rem;background:linear-gradient(135deg,var(--teal),#059669)">🌐 Live Demo ↗</a>';
+  }
+  var githubUrl = d.github || 'https://github.com/vrajparekh1312';
   document.getElementById('modal-content').innerHTML =
     '<div class="modal-tag ' + d.tag.cls + '">' + d.tag.text + '</div>' +
     '<h2 class="modal-title">' + d.title + '</h2>' +
@@ -644,7 +706,7 @@ function openModal(key) {
     '<div class="modal-sec"><h4>Tech Stack</h4><div class="modal-stack">' + stackHTML + '</div></div>' +
     '<div style="display:flex;gap:.8rem;margin-top:1.4rem;flex-wrap:wrap">' +
     liveBtn +
-    '<a href="https://github.com/vrajparekh1312" target="_blank" class="btn btn-p" style="text-decoration:none;font-size:.8rem">GitHub ↗</a>' +
+    '<a href="' + githubUrl + '" target="_blank" class="btn btn-p" style="text-decoration:none;font-size:.8rem">GitHub ↗</a>' +
     '<button class="btn btn-g" style="font-size:.8rem" onclick="closeModal()">Close</button></div>';
   document.getElementById('modal-ov').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -667,11 +729,11 @@ document.addEventListener('keydown', function (e) {
 
 /* ── AI ASSISTANT ── */
 var AI_KB = {
-  projects: "Vraj's 4 major projects:<br><br>• 🏆 <b>CitySolve</b> — Hackathon-winning civic issue platform with GPS<br>• 🤖 <b>Infer@</b> — AI document intelligence for Kochi Metro Rail<br>• 🌿 <b>HerbCure</b> — AI herbal medicine detection<br>• ⛏️ <b>EnviroMine</b> — Coal mine emission analyzer",
-  skills: "Tech stack:<br><br>• 💻 Python · Java · JavaScript · C<br>• 🌐 HTML/CSS · React · Next.js · Node.js · Express.js<br>• 🗄️ MongoDB · MySQL · Firebase<br>• ☁️ Google Cloud (GCP)<br>• 🤖 MERN · REST APIs · AI/ML",
-  achievements: "• 🏆 <b>1st Place</b> CVMU 4.0 Hackathon<br>• ☁️ <b>4 Google Cloud Certifications</b><br>• 📊 <b>CPI: 8.79</b>",
-  contact: "• 📧 vraj13122005@gmail.com<br>• 📞 +91 9316464837<br>• 🐙 github.com/vrajparekh1312<br>• 💼 linkedin.com/in/vraj-parekh-7b801b30b",
-  education: "• 🎓 <b>B.Tech CE</b> — MBIT, CVM University<br>• 📊 CPI: 8.79 · strong Science foundation in HSC/SSC",
+  projects: "Vraj's 6 major projects:<br><br>• 🏆 <b>CitySolve</b> — Hackathon-winning civic issue platform with GPS<br>• 🤖 <b>Infer@</b> — AI document intelligence for Kochi Metro Rail<br>• 🌿 <b>HerbCure</b> — AI herbal medicine detection<br>• ⛏️ <b>EnviroMine</b> — Coal mine emission analyzer<br>• 🎓 <b>KidsCode</b> — Gamified e-learning platform (HP Param IT Solutions)<br>• 🚀 <b>CodeAlpha Internship</b> — Frontend projects (Calculator, Music Player (MELO), Portfolio)",
+  skills: "Tech stack:<br><br>• 💻 Python · Java · JavaScript · C · Gemini API · LangChain (Ongoing)<br>• 🌐 HTML/CSS · React · Next.js · Tailwind CSS · Node.js · Express.js<br>• 🗄️ MongoDB · MySQL · Firebase<br>• ☁️ Google Cloud (GCP) &amp; AWS<br>• 🤖 MERN · REST APIs · AI/ML",
+  achievements: "• 🏆 <b>1st Place</b> CVMU 4.0 Hackathon<br>• ☁️ <b>4 Google Cloud Certifications</b><br>• 📊 <b>CPI: 9.24</b>",
+  contact: "• 📧 vraj13122005@gmail.com<br>• 🐙 github.com/vrajparekh1312<br>• 💼 linkedin.com/in/vraj-parekh-7b801b30b",
+  education: "• 🎓 <b>B.Tech CE</b> — MBIT, CVM University<br>• 📊 CPI: 9.24 · strong Science foundation in HSC/SSC",
   def: "I can tell you about Vraj's <b>projects</b>, <b>skills</b>, <b>achievements</b>, <b>education</b>, or <b>contact</b> info. What would you like to know? 😊"
 };
 
@@ -681,13 +743,15 @@ function matchAI(q) {
   if (/infer/.test(l)) return "🤖 <b>Infer@</b> — AI document intelligence for KMRL (SIH 2025). OCR + layout detection. Stack: Python · OpenCV · Tesseract.";
   if (/herb/.test(l)) return "🌿 <b>HerbCure</b> — Scan herbs via OCR, get AI-powered medicine alternatives. Stack: Python · Tesseract · AI/ML.";
   if (/enviro|mine/.test(l)) return "⛏️ <b>EnviroMine</b> — Calculate coal mine emissions, get AI reduction strategies. Stack: Node.js · JavaScript.";
+  if (/kidscode|kids|elearning/.test(l)) return "🧩 <b>KidsCode</b> — Gamified e-learning platform for children to learn programming, built during HP Param IT Solutions internship. Features XP/streaks, parent controls, and passwordless OTP. Stack: Node.js · Express · MongoDB.";
+  if (/codealpha|calculator|melo/.test(l)) return "🚀 <b>CodeAlpha Internship</b> — Vraj completed 3 frontend tasks: 1) responsive Calculator, 2) MELO Music Player with audio controls, and 3) Personal Portfolio. Stack: HTML5 · CSS3 · JS.";
   if (/project|build/.test(l)) return AI_KB.projects;
   if (/skill|tech|python|java|node/.test(l)) return AI_KB.skills;
   if (/achiev|award|hackathon|cert/.test(l)) return AI_KB.achievements;
   if (/contact|email|phone|linkedin|github|hire/.test(l)) return AI_KB.contact;
   if (/edu|college|cpi/.test(l)) return AI_KB.education;
   if (/hi|hello|hey/.test(l)) return "Hey! 👋 Ask me about Vraj's <b>projects</b>, <b>skills</b>, <b>education</b>, or how to <b>hire him</b>!";
-  if (/who|vraj|about/.test(l)) return "Vraj Ashokbhai Parekh — CE student at MBIT (CPI: 8.79), AI developer, full-stack engineer, CVMU 4.0 CVMU Hackathon Winner! 🚀";
+  if (/who|vraj|about/.test(l)) return "Vraj Ashokbhai Parekh — CE student at MBIT (CPI: 9.24), AI developer, full-stack engineer, CVMU 4.0 CVMU Hackathon Winner! 🚀";
   return AI_KB.def;
 }
 
@@ -918,27 +982,27 @@ var TERM_CMDS = {
     return '<div class="tc-green">Vraj Ashokbhai Parekh</div>' +
       '<div>Role&nbsp;&nbsp;&nbsp;&nbsp; : Computer Engineering Student</div>' +
       '<div>College&nbsp;&nbsp; : MBIT, CVM University</div>' +
-      '<div>CPI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <span class="tc-amber">8.79</span></div>' +
+      '<div>CPI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <span class="tc-amber">9.24</span></div>' +
       '<div>Location : Gujarat, India</div>' +
       '<div>Status&nbsp;&nbsp;&nbsp; : <span class="tc-green">Available for opportunities ✓</span></div>';
   },
   skills: function () {
-    return '<div class="tc-violet">── LANGUAGES ──</div>' +
-      '<div>Python | Java | JavaScript | C</div>' +
+    return '<div class="tc-violet">── LANGUAGES &amp; AI ──</div>' +
+      '<div>Python | Java | JavaScript | C | Gemini API | LangChain (Ongoing)</div>' +
       '<div class="tc-violet">── FRONTEND ──</div>' +
-      '<div>HTML/CSS | React | Next.js | UI/UX</div>' +
+      '<div>HTML/CSS | React | Next.js | Tailwind CSS | UI/UX</div>' +
       '<div class="tc-violet">── BACKEND / MERN ──</div>' +
       '<div>Node.js | Express | MERN Stack | REST APIs</div>' +
-      '<div class="tc-violet">── DATABASES & CLOUD ──</div>' +
-      '<div>MongoDB | MySQL | Firebase | Google Cloud (GCP)</div>' +
-      '<div class="tc-violet">── AI & TOOLS ──</div>' +
-      '<div>AI/ML | OpenCV | Tesseract OCR | Full-stack delivery</div>';
+      '<div class="tc-violet">── DATABASES &amp; CLOUD ──</div>' +
+      '<div>MongoDB | MySQL | Firebase | Google Cloud (GCP) &amp; AWS</div>';
   },
   projects: function () {
-    return '<div class="tc-amber">🏆 CitySolve</div><div>&nbsp;&nbsp;&nbsp;Smart Civic Issue Reporting Platform — CVMU 4.0 CVMU Hackathon Winner</div>' +
+    return '<div class="tc-amber">🏆 CitySolve</div><div>&nbsp;&nbsp;&nbsp;Smart Civic Issue Reporting Platform — CVMU 4.0 Hackathon Winner</div>' +
       '<div class="tc-blue">🤖 Infer@</div><div>&nbsp;&nbsp;&nbsp;AI Document Intelligence for Kochi Metro Rail (SIH 2025)</div>' +
       '<div class="tc-green">🌿 HerbCure</div><div>&nbsp;&nbsp;&nbsp;AI Herbal Medicine Detection &amp; Recommendations</div>' +
-      '<div class="tc-violet">⛏️ EnviroMine</div><div>&nbsp;&nbsp;&nbsp;Coal Mine Emission Analyzer &amp; Sustainability Platform</div>';
+      '<div class="tc-violet">⛏️ EnviroMine</div><div>&nbsp;&nbsp;&nbsp;Coal Mine Emission Analyzer &amp; Sustainability Platform</div>' +
+      '<div class="tc-teal">🧩 KidsCode</div><div>&nbsp;&nbsp;&nbsp;Gamified E-Learning Platform — HP Param IT Solutions Internship</div>' +
+      '<div class="tc-neon">🚀 CodeAlpha</div><div>&nbsp;&nbsp;&nbsp;Frontend Development Internship Tasks (Calculator, MELO, Portfolio)</div>';
   },
   achievements: function () {
     return '<div class="tc-amber">🏆 1st Place — CVMU 4.0 Hackathon (2024)</div>' +
@@ -946,11 +1010,10 @@ var TERM_CMDS = {
       '<div>🖥️&nbsp;&nbsp;Cloud Computing Fundamentals</div>' +
       '<div>🤖&nbsp;&nbsp;Level 3 GenAI: Prompt Engineering</div>' +
       '<div>🛠️&nbsp;&nbsp;Compute Engine &amp; Networking Skill Badges</div>' +
-      '<div>📊&nbsp;&nbsp;Academic CPI: <span class="tc-green">8.79/10</span></div>';
+      '<div>📊&nbsp;&nbsp;Academic CPI: <span class="tc-green">9.24/10</span></div>';
   },
   contact: function () {
     return '<div>📧 Email&nbsp;&nbsp;&nbsp;&nbsp;: <span style="color:var(--neon)">vraj13122005@gmail.com</span></div>' +
-      '<div>📞 Phone&nbsp;&nbsp;&nbsp;&nbsp;: <span class="tc-green">+91 9316464837</span></div>' +
       '<div>🐙 GitHub&nbsp;&nbsp;&nbsp;: <span class="tc-violet">github.com/vrajparekh1312</span></div>' +
       '<div>💼 LinkedIn : <span class="tc-blue">linkedin.com/in/vraj-parekh-7b801b30b</span></div>';
   },
