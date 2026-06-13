@@ -757,14 +757,51 @@ document.addEventListener('keydown', function (e) {
   if ((e.ctrlKey || e.metaKey) && e.key === '`') { e.preventDefault(); openTerminal(); }
 });
 
-/* ── AI ASSISTANT ── */
 var AI_KB = {
-  projects: "Vraj's 6 major projects:<br><br>• 🏆 <b>CitySolve</b> — Hackathon-winning civic issue platform with GPS<br>• 🤖 <b>Infer@</b> — AI document intelligence for Kochi Metro Rail<br>• 🌿 <b>HerbCure</b> — AI herbal medicine detection<br>• ⛏️ <b>EnviroMine</b> — Coal mine emission analyzer<br>• 🎓 <b>KidsCode</b> — Gamified e-learning platform (HP Param IT Solutions)<br>• 🚀 <b>CodeAlpha Internship</b> — Frontend projects (Calculator, Music Player (MELO), Portfolio)",
-  skills: "Tech stack:<br><br>• 💻 Python · Java · JavaScript · C · Gemini API · LangChain (Ongoing)<br>• 🌐 HTML/CSS · React · Next.js · Tailwind CSS · Node.js · Express.js<br>• 🗄️ MongoDB · MySQL · Firebase<br>• ☁️ Google Cloud (GCP) &amp; AWS<br>• 🤖 MERN · REST APIs · AI/ML",
-  achievements: "• 🏆 <b>1st Place</b> CVMU 4.0 Hackathon<br>• ☁️ <b>4 Google Cloud Certifications</b><br>• 📊 <b>CPI: 9.24</b>",
-  contact: "• 📧 vraj13122005@gmail.com<br>• 🐙 github.com/vrajparekh1312<br>• 💼 linkedin.com/in/vraj-parekh-7b801b30b",
-  education: "• 🎓 <b>B.Tech CE</b> — MBIT, CVM University<br>• 📊 CPI: 9.24 · strong Science foundation in HSC/SSC",
-  def: "I can tell you about Vraj's <b>projects</b>, <b>skills</b>, <b>achievements</b>, <b>education</b>, or <b>contact</b> info. What would you like to know? 😊"
+  projects: "Vraj's major portfolio projects:<br><br>" +
+    "• 🏆 <b>CitySolve</b> — CVMU 4.0 Hackathon Winner. Real-time civic issue reporting with GPS, image uploads, and dashboard. Stack: Node.js · MongoDB · Kotlin.<br>" +
+    "• 🤖 <b>Infer@</b> — SIH 2025 project for Kochi Metro Rail. AI document intelligence utilizing OCR &amp; layout detection. Stack: Python · OpenCV · Tesseract.<br>" +
+    "• 🧩 <b>KidsCode</b> — HP Param IT Solutions internship. Gamified programming learning for kids with XP, parent controls, OTP login. Stack: Node.js · Express · MongoDB.<br>" +
+    "• 🌿 <b>HerbCure</b> — Scan herbs via OCR to get AI-powered alternative medicine recommendations. Stack: Python · Tesseract · AI/ML.<br>" +
+    "• ⛏️ <b>EnviroMine</b> — Coal mine emission calculator and AI sustainability strategies. Stack: Node.js · JavaScript.",
+  skills: "Technical Skills:<br><br>" +
+    "• 💻 <b>Languages &amp; AI:</b> Python · Java · JavaScript · C · Gemini API · LangChain (Ongoing)<br>" +
+    "• 🌐 <b>Frontend:</b> HTML5 · CSS3 · React · Next.js · Tailwind CSS<br>" +
+    "• 🗄️ <b>Backend &amp; DB:</b> Node.js · Express.js · REST APIs · MongoDB · MySQL · Firebase<br>" +
+    "• ☁️ <b>Cloud &amp; DevOps:</b> Google Cloud (GCP) &amp; AWS<br>" +
+    "• 🤖 <b>Other:</b> Full-Stack Development · AI/ML Integration",
+  achievements: "Key Achievements:<br><br>" +
+    "• 🏆 <b>1st Place</b> — CVMU 4.0 Hackathon (with CitySolve)<br>" +
+    "• 🚇 <b>Smart India Hackathon 2025</b> — Developed AI system for Kochi Metro Rail (KMRL)<br>" +
+    "• ☁️ <b>4 Cloud Certifications</b> — 3 Google Cloud &amp; 1 AWS Academy graduate<br>" +
+    "• 📊 <b>Academic Performance:</b> CPI: 9.24 / 10",
+  certifications: "Cloud &amp; Tech Certifications (4 total):<br><br>" +
+    "• ☁️ <b>AWS Academy Graduate — Cloud Foundations</b> (Amazon Web Services, Feb 2026)<br>" +
+    "• 🟡 <b>Google Cloud Foundations: Infrastructure in Google Cloud</b> (Google Cloud, Oct 2023)<br>" +
+    "• 🟡 <b>Google Cloud Foundations: Cloud Computing Fundamentals</b> (Google Cloud, Oct 2023)<br>" +
+    "• 🤖 <b>Level 3 GenAI: Prompt Engineering</b> (Google Cloud, Oct 2023)",
+  hackathons: "Hackathon Experience:<br><br>" +
+    "• 🏆 <b>CVMU 4.0 Hackathon (1st Place Winner):</b> Conceptualized and built <b>CitySolve</b>, a real-time civic issue reporting platform with GPS verification and dashboard tracking.<br>" +
+    "• 🚇 <b>Smart India Hackathon (SIH) 2025:</b> Developed <b>Infer@</b>, an AI-powered document intelligence system tailored for Kochi Metro Rail (KMRL) to perform OCR and layout analysis.",
+  resume: "<b>Vraj Parekh's Resume</b><br><br>" +
+    "• Full-Stack Developer<br>" +
+    "• CVMU 4.0 Hackathon Winner<br>" +
+    "• SIH 2025 Participant<br>" +
+    "• 4 Cloud Certifications (3 Google Cloud &amp; 1 AWS)<br><br>" +
+    "👉 <a href=\"#\" onclick=\"dlResume();return false;\" style=\"color:var(--neon);text-decoration:underline;font-weight:bold\">Download Resume</a><br>" +
+    "👉 <a href=\"https://www.linkedin.com/in/vraj-parekh-7b801b30b\" target=\"_blank\" style=\"color:var(--neon);text-decoration:underline;font-weight:bold\">View LinkedIn</a><br>" +
+    "👉 <a href=\"#\" onclick=\"scrollToSection('contact');toggleAI();return false;\" style=\"color:var(--neon);text-decoration:underline;font-weight:bold\">Contact Vraj</a>",
+  contact: "Feel free to reach out to Vraj Parekh:<br><br>" +
+    "• 📧 <b>Email:</b> <a href=\"mailto:vraj13122005@gmail.com\" style=\"color:var(--neon);text-decoration:underline\">vraj13122005@gmail.com</a><br>" +
+    "• 💼 <b>LinkedIn:</b> <a href=\"https://www.linkedin.com/in/vraj-parekh-7b801b30b\" target=\"_blank\" style=\"color:var(--neon);text-decoration:underline\">linkedin.com/in/vraj-parekh-7b801b30b</a><br>" +
+    "• 🐙 <b>GitHub:</b> <a href=\"https://github.com/vrajparekh1312\" target=\"_blank\" style=\"color:var(--neon);text-decoration:underline\">github.com/vrajparekh1312</a><br><br>" +
+    "You can also use the contact form at the bottom of the page! 👇",
+  education: "Education Details:<br><br>" +
+    "• 🎓 <b>B.Tech in Computer Engineering</b><br>" +
+    "&nbsp;&nbsp;Madhuben &amp; Bhanubhai Patel Institute of Technology (MBIT), CVM University<br>" +
+    "&nbsp;&nbsp;Academic CPI: <b>9.24 / 10</b><br>" +
+    "• 🏫 Secondary Education with strong Science foundation.",
+  def: "I can tell you about Vraj's <b>projects</b>, <b>skills</b>, <b>achievements</b>, <b>certifications</b>, <b>hackathons</b>, <b>resume</b>, or <b>contact</b> info. What would you like to know? 😊"
 };
 
 function matchAI(q) {
@@ -777,7 +814,10 @@ function matchAI(q) {
   if (/codealpha|calculator|melo/.test(l)) return "🚀 <b>CodeAlpha Internship</b> — Vraj completed 3 frontend tasks: 1) responsive Calculator, 2) MELO Music Player with audio controls, and 3) Personal Portfolio. Stack: HTML5 · CSS3 · JS.";
   if (/project|build/.test(l)) return AI_KB.projects;
   if (/skill|tech|python|java|node/.test(l)) return AI_KB.skills;
-  if (/achiev|award|hackathon|cert/.test(l)) return AI_KB.achievements;
+  if (/achiev|award/.test(l)) return AI_KB.achievements;
+  if (/cert/.test(l)) return AI_KB.certifications;
+  if (/hackathon|sih|cvmu/.test(l)) return AI_KB.hackathons;
+  if (/resume|cv|download/.test(l)) return AI_KB.resume;
   if (/contact|email|phone|linkedin|github|hire/.test(l)) return AI_KB.contact;
   if (/edu|college|cpi/.test(l)) return AI_KB.education;
   if (/hi|hello|hey/.test(l)) return "Hey! 👋 Ask me about Vraj's <b>projects</b>, <b>skills</b>, <b>education</b>, or how to <b>hire him</b>!";
@@ -806,14 +846,22 @@ function sendAI() {
   um.className = 'ai-usr'; um.textContent = q; box.appendChild(um);
   inp.value = ''; box.scrollTop = box.scrollHeight;
   var t = document.createElement('div');
-  t.className = 'ai-bot';
-  t.innerHTML = '<span class="tdot"></span><span class="tdot"></span><span class="tdot"></span>';
+  t.className = 'ai-bot typing';
+  t.innerHTML = '<span style="font-size:.74rem;color:var(--t2);margin-right:.5rem">VP.AI is typing...</span><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span>';
   box.appendChild(t); box.scrollTop = box.scrollHeight;
   setTimeout(function () {
     t.remove();
     var bm = document.createElement('div'); bm.className = 'ai-bot'; bm.innerHTML = matchAI(q);
     box.appendChild(bm); box.scrollTop = box.scrollHeight;
   }, 650 + Math.random() * 400);
+}
+
+function sendAISuggest(q) {
+  var inp = document.getElementById('ai-inp');
+  if (inp) {
+    inp.value = q;
+    sendAI();
+  }
 }
 
 /* ── EASTER EGG — DEVELOPER MODE (logo ×5) ── */
@@ -1036,10 +1084,8 @@ var TERM_CMDS = {
   },
   achievements: function () {
     return '<div class="tc-amber">🏆 1st Place — CVMU 4.0 Hackathon (2024)</div>' +
-      '<div>☁️&nbsp;&nbsp;Google Cloud Infrastructure Expertise</div>' +
-      '<div>🖥️&nbsp;&nbsp;Cloud Computing Fundamentals</div>' +
-      '<div>🤖&nbsp;&nbsp;Level 3 GenAI: Prompt Engineering</div>' +
-      '<div>🛠️&nbsp;&nbsp;Compute Engine &amp; Networking Skill Badges</div>' +
+      '<div class="tc-blue">🚇 Smart India Hackathon 2025 Participant (KMRL)</div>' +
+      '<div>☁️&nbsp;&nbsp;4 Cloud Certifications (3 Google Cloud &amp; 1 AWS)</div>' +
       '<div>📊&nbsp;&nbsp;Academic CPI: <span class="tc-green">9.24/10</span></div>';
   },
   contact: function () {
@@ -1048,8 +1094,8 @@ var TERM_CMDS = {
       '<div>💼 LinkedIn : <span class="tc-blue">linkedin.com/in/vraj-parekh-7b801b30b</span></div>';
   },
   resume: function () {
-    setTimeout(function () { alert('Resume coming soon!\nVisit: linkedin.com/in/vraj-parekh-7b801b30b'); }, 100);
-    return '<span class="tc-amber">Opening resume... (Available on LinkedIn)</span>';
+    setTimeout(function () { dlResume(); }, 100);
+    return '<span class="tc-amber">Triggering resume download...</span>';
   },
   clear: function () { document.getElementById('term-output').innerHTML = ''; return null; },
   exit: function () { setTimeout(closeTerm, 300); return '<span class="tc-muted">Closing terminal...</span>'; }

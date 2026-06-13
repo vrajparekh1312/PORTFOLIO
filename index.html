@@ -942,6 +942,18 @@
     <div class="ai-msgs" id="ai-msgs">
       <div class="ai-bot">Hi 👋 I'm Vraj's AI. Ask me about his <b>projects</b>, <b>skills</b>, <b>education</b>, <b>achievements</b>, or how to <b>contact him</b>!</div>
     </div>
+    <div class="ai-suggests" id="ai-suggests">
+      <button class="chip-achievements" onclick="sendAISuggest('Achievements')">Achievements</button>
+      <button class="chip-projects" onclick="sendAISuggest('Projects')">Projects</button>
+      <button class="chip-skills" onclick="sendAISuggest('Skills')">Skills</button>
+      <button class="chip-certifications" onclick="sendAISuggest('Certifications')">Certifications</button>
+      <button class="chip-hackathons" onclick="sendAISuggest('Hackathons')">Hackathons</button>
+      <button class="chip-resume" onclick="sendAISuggest('Resume')">Resume</button>
+      <button class="chip-contact" onclick="sendAISuggest('Contact')">Contact</button>
+      <button class="chip-citysolve" onclick="sendAISuggest('Tell me about CitySolve')">CitySolve</button>
+      <button class="chip-kidscode" onclick="sendAISuggest('Tell me about KidsCode')">KidsCode</button>
+      <button class="chip-infera" onclick="sendAISuggest('Tell me about Infer@')">Infer@</button>
+    </div>
     <div class="ai-inp-row">
       <input class="ai-inp" id="ai-inp" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter')sendAI()">
       <button class="ai-send" onclick="sendAI()">➤</button>
