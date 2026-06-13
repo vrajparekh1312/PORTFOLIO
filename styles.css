@@ -916,19 +916,31 @@ body.light .ai-usr { background: linear-gradient(135deg,rgba(37, 99, 235, 0.12),
 /* suggestions chips */
 .ai-suggests {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap !important;
-  justify-content: flex-start;
-  align-items: center;
+  flex-direction: column !important;
   gap: .45rem;
   padding: .6rem .8rem;
+  max-height: 125px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(79,163,255,.2) transparent;
   border-top: 1px solid rgba(79,163,255,.07);
   background: rgba(13, 17, 23, 0.4);
   transition: border-top-color .4s, background-color .4s;
 }
+.ai-suggests::-webkit-scrollbar {
+  width: 4px;
+}
+.ai-suggests::-webkit-scrollbar-thumb {
+  background: rgba(88,166,255,.2);
+  border-radius: 4px;
+}
 body.light .ai-suggests {
   border-top-color: rgba(37, 99, 235, 0.12);
   background: rgba(248, 250, 252, 0.6);
+  scrollbar-color: rgba(37,99,235,.2) transparent;
+}
+body.light .ai-suggests::-webkit-scrollbar-thumb {
+  background: rgba(37,99,235,.2);
 }
 .ai-suggests button {
   appearance: none;
@@ -936,14 +948,14 @@ body.light .ai-suggests {
   -moz-appearance: none;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   font-family: var(--font-m);
   font-size: .68rem;
   font-weight: 500;
   color: var(--neon) !important;
   background: rgba(88,166,255,.07) !important;
   border: 1px solid rgba(88,166,255,.18) !important;
-  border-radius: 100px !important;
+  border-radius: 8px !important;
   padding: .35rem .75rem !important;
   height: 28px !important;
   cursor: pointer;
@@ -953,6 +965,7 @@ body.light .ai-suggests {
   box-sizing: border-box;
   margin: 0;
   outline: none;
+  width: 100%;
 }
 .ai-suggests button:hover {
   background: var(--neon) !important;
