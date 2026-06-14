@@ -1023,10 +1023,84 @@
     <div class="reward-confetti" id="reward-confetti"></div>
     <span class="reward-emoji">🎉</span>
     <div class="reward-title">ACCESS GRANTED!</div>
-    <div class="reward-msg"><b style="color:#28ca40">Congrats! You unlocked Developer Mode.</b><br><br>You found the hidden Easter egg 🥚<br>Vraj appreciates your curiosity and attention to detail!</div>
+    <div class="reward-msg" style="text-align: left; max-width: 290px; margin: 1.2rem auto; line-height: 2; font-family: var(--font-m); font-size: 0.74rem;">
+      <span class="tc-green">✓</span> Developer Mode Active<br>
+      <span class="tc-green">✓</span> DEV Badge Activated<br>
+      <span class="tc-green">✓</span> Secret Terminal Commands Unlocked<br>
+      <span class="tc-green">✓</span> Developer Toolbox Enabled
+    </div>
     <button class="reward-close-btn" onclick="closeReward()">[ CLOSE TERMINAL ]</button>
   </div>
 </div>
+
+<!-- MATRIX CANVAS OVERLAY -->
+<div id="matrix-overlay" onclick="closeMatrixOverlay()" style="display:none; position:fixed; inset:0; z-index:99999; background:rgba(0,0,0,0.95); cursor:pointer;">
+  <canvas id="matrix-canvas"></canvas>
+  <div style="position:absolute; bottom:20px; left:50%; transform:translateX(-50%); color:rgba(0,255,65,0.7); font-family:var(--font-m); font-size:0.75rem; pointer-events:none; letter-spacing: 0.05em;">
+    Press ESC or Click to exit Matrix
+  </div>
+</div>
+
+<!-- DEVELOPER CONTROL PANEL -->
+<div class="dev-panel" id="dev-panel">
+  <div class="dev-panel-header">
+    <div class="dev-panel-title">
+      <span class="dev-panel-status-dot"></span>
+      ⚙️ DEV TOOLS
+    </div>
+    <button class="dev-panel-close" onclick="toggleDevPanel()" aria-label="Close Developer Panel">✕</button>
+  </div>
+  <div class="dev-panel-body">
+    
+    <div class="dev-panel-section">
+      <div class="dev-panel-section-title">SYSTEM STATUS</div>
+      <div class="dev-status-console">
+        <div>Developer Mode : <span class="tc-green">ACTIVE</span></div>
+        <div>Theme          : <span id="status-theme-val" class="tc-neon">HACKER</span></div>
+      </div>
+    </div>
+
+    <div class="dev-panel-section">
+      <div class="dev-panel-section-title">🎨 SELECT THEME</div>
+      <div class="dev-theme-list">
+        <button class="dev-theme-item dt-green active" onclick="setAccentColor('green', this)">
+          <span class="theme-dot dot-green"></span> Hacker (Matrix Green)
+        </button>
+        <button class="dev-theme-item dt-cyan" onclick="setAccentColor('cyan', this)">
+          <span class="theme-dot dot-cyan"></span> Professional Developer (Electric Cyan)
+        </button>
+        <button class="dev-theme-item dt-purple" onclick="setAccentColor('purple', this)">
+          <span class="theme-dot dot-purple"></span> Cyberpunk (Neon Purple)
+        </button>
+        <button class="dev-theme-item dt-orange" onclick="setAccentColor('orange', this)">
+          <span class="theme-dot dot-orange"></span> Creative Builder (Innovation Gold)
+        </button>
+      </div>
+    </div>
+    
+    <div class="dev-panel-section">
+      <div class="dev-panel-section-title">💻 CURRENT STACK</div>
+      <div class="dev-stack-console">
+        <div><span class="tc-neon">Frontend</span> : HTML5 • CSS3 • JavaScript • Tailwind CSS</div>
+        <div><span class="tc-neon">Backend</span>  : Node.js • Express.js</div>
+        <div><span class="tc-neon">Database</span> : MongoDB Atlas</div>
+        <div><span class="tc-neon">Tools</span>    : Git • GitHub • VS Code</div>
+        <div><span class="tc-neon">Learning</span> : AI • Cloud Computing</div>
+      </div>
+    </div>
+
+    <button class="dev-reset-btn" onclick="resetDevMode()">[ RESET DEV MODE ]</button>
+  </div>
+</div>
+
+<!-- DEVELOPER CONTROL PANEL TRIGGER BUBBLE -->
+<button class="dev-panel-bubble" id="dev-panel-bubble" onclick="toggleDevPanel()" title="Developer Control Panel" aria-label="Toggle Developer Panel">
+  <span class="dev-bubble-text">DEV</span>
+  <svg class="dev-bubble-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="3"></circle>
+    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+  </svg>
+</button>
 
 <!-- HACKER TERMINAL (Ctrl+~) -->
 <div id="terminal-overlay" onclick="closeTermBg(event)">

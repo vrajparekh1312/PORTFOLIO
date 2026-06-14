@@ -413,6 +413,15 @@ function toggleTheme() {
   document.body.classList.toggle('light', !isDark);
   document.getElementById('theme-btn').textContent = isDark ? '☀️' : '🌙';
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  
+  // Re-sync with Dev panel checkbox
+  var chk = document.getElementById('dark-light-toggle');
+  if (chk) chk.checked = !isDark;
+  
+  // Reapply custom accents if active
+  if (localStorage.getItem('devPanelUnlocked') === 'true') {
+    applyAccentColors();
+  }
 }
 
 /* ── MOBILE NAV ── */
@@ -990,11 +999,13 @@ function submitChallenge() {
   var resultEl = document.getElementById('dev-result');
   var submitBtn = document.getElementById('dev-submit');
   if (selectedChoice === true) {
+    playSuccessSound();
     resultEl.innerHTML = '<span class="dev-success">✓ CORRECT! Access granted. Loading reward...</span>';
     submitBtn.disabled = true;
     document.querySelectorAll('.dev-choice').forEach(function (b) { b.style.pointerEvents = 'none'; });
     setTimeout(function () { closeDev(); showReward(); }, 1200);
   } else {
+    playSynthSound(150, 'sawtooth', 0.2);
     resultEl.innerHTML = '<span class="dev-error">✗ Incorrect. Study the code carefully and try again.</span>';
     submitBtn.disabled = true;
     document.querySelectorAll('.dev-choice').forEach(function (b) { b.classList.remove('correct', 'wrong'); b.style.pointerEvents = 'auto'; });
@@ -1021,6 +1032,7 @@ function showReward() {
 function closeReward() {
   document.getElementById('reward-overlay').classList.remove('open');
   document.body.style.overflow = '';
+  unlockDevPanel();
 }
 
 function spawnConfetti() {
@@ -1104,12 +1116,15 @@ var TERM_CMDS = {
 function openTerminal() {
   document.getElementById('terminal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
+  playSynthSound(440, 'triangle', 0.1);
+  setTimeout(function () { playSynthSound(554.37, 'triangle', 0.1); }, 80);
   setTimeout(function () { var ti = document.getElementById('term-inp'); if (ti) ti.focus(); }, 100);
 }
 
 function closeTerm() {
   document.getElementById('terminal-overlay').classList.remove('open');
   document.body.style.overflow = '';
+  playSynthSound(330, 'triangle', 0.15);
 }
 
 function closeTermBg(e) {
@@ -1130,14 +1145,36 @@ function appendTermHTML(html) {
 
 function handleTermInput(e) {
   var inp = document.getElementById('term-inp');
+  
+  // Play keyboard sound if enabled
+  if (e.key !== 'Enter' && e.key !== 'ArrowUp' && e.key !== 'ArrowDown' && e.key !== 'Tab' && e.key !== 'Escape') {
+    var freq = 300 + Math.random() * 150;
+    playSynthSound(freq, 'triangle', 0.03);
+  }
+  
   if (e.key === 'Enter') {
-    var cmd = inp.value.trim().toLowerCase();
-    if (!cmd) return;
-    termHistory.unshift(cmd); termHistIdx = -1;
-    appendTermLine('<span class="tc-green">vraj@portfolio</span><span class="tc-muted">:~$</span> ' + cmd);
+    var rawInput = inp.value.trim();
+    if (!rawInput) return;
+    termHistory.unshift(rawInput); termHistIdx = -1;
+    appendTermLine('<span class="tc-green">vraj@portfolio</span><span class="tc-muted">:~$</span> ' + rawInput);
+    
+    // Split input into command and arguments
+    var parts = rawInput.split(/\s+/);
+    var cmd = parts[0].toLowerCase();
+    var arg = parts.slice(1).join(' ').toLowerCase();
+    
     var fn = TERM_CMDS[cmd];
-    if (fn) { var out = fn(); if (out !== null && out !== undefined) appendTermHTML(out); }
-    else { appendTermLine('<span style="color:#ff5f57">bash: ' + cmd + ": command not found. Type 'help' for commands.</span>"); }
+    var isDevCmd = ['help-dev', 'matrix', 'inspect', 'stats', 'hire', 'theme'].indexOf(cmd) !== -1;
+    var isUnlocked = localStorage.getItem('devPanelUnlocked') === 'true';
+    
+    if (fn && (!isDevCmd || isUnlocked)) {
+      playSynthSound(700, 'triangle', 0.05);
+      var out = fn(arg);
+      if (out !== null && out !== undefined) appendTermHTML(out);
+    } else {
+      playSynthSound(150, 'sawtooth', 0.15);
+      appendTermLine('<span style="color:#ff5f57">bash: ' + cmd + ": command not found. Type 'help' for commands.</span>");
+    }
     inp.value = '';
   }
   if (e.key === 'ArrowUp') {
@@ -1148,3 +1185,366 @@ function handleTermInput(e) {
     else { termHistIdx = -1; inp.value = ''; }
   }
 }
+
+/* ── DEVELOPER CONTROL PANEL LOGIC ── */
+var devPanelUnlocked = localStorage.getItem('devPanelUnlocked') === 'true';
+var currentAccent = localStorage.getItem('devAccent') || 'green';
+if (currentAccent === 'red') currentAccent = 'orange';
+var soundEnabled = localStorage.getItem('devSound') === 'true';
+var isLayoutInspecting = false;
+
+var ACCENTS = {
+  green: {
+    dark:  { '--neon': '#00ff88', '--violet': '#10B981', '--teal': '#00ff88', '--gn': '0 0 40px rgba(0,255,136,.22)', '--gv': '0 0 40px rgba(16,185,129,.22)' },
+    light: { '--neon': '#00a85a', '--violet': '#059669', '--teal': '#00a85a', '--gn': 'none', '--gv': 'none' }
+  },
+  cyan: {
+    dark:  { '--neon': '#00d9ff', '--violet': '#3b82f6', '--teal': '#00d9ff', '--gn': '0 0 40px rgba(0,217,255,.22)', '--gv': '0 0 40px rgba(59,130,246,.22)' },
+    light: { '--neon': '#008fa6', '--violet': '#2563eb', '--teal': '#008fa6', '--gn': 'none', '--gv': 'none' }
+  },
+  purple: {
+    dark:  { '--neon': '#a855f7', '--violet': '#ec4899', '--teal': '#a855f7', '--gn': '0 0 40px rgba(168,85,247,.22)', '--gv': '0 0 40px rgba(236,72,153,.22)' },
+    light: { '--neon': '#7c3aed', '--violet': '#db2777', '--teal': '#7c3aed', '--gn': 'none', '--gv': 'none' }
+  },
+  orange: {
+    dark:  { '--neon': '#FFD700', '--violet': '#f59e0b', '--teal': '#FFD700', '--gn': '0 0 40px rgba(255,215,0,.22)', '--gv': '0 0 40px rgba(245,158,11,.22)' },
+    light: { '--neon': '#d97706', '--violet': '#b45309', '--teal': '#d97706', '--gn': 'none', '--gv': 'none' }
+  }
+};
+
+function unlockDevPanel() {
+  localStorage.setItem('devPanelUnlocked', 'true');
+  showDevPanelTrigger();
+  setTimeout(function () {
+    toggleDevPanel(true);
+  }, 500);
+}
+
+function showDevPanelTrigger() {
+  var bubble = document.getElementById('dev-panel-bubble');
+  if (bubble) bubble.classList.add('show');
+}
+
+function toggleDevPanel(forceOpen) {
+  var panel = document.getElementById('dev-panel');
+  if (!panel) return;
+  var isOpen = panel.classList.contains('open');
+  if (forceOpen === true) {
+    panel.classList.add('open');
+    isOpen = true;
+  } else if (forceOpen === false) {
+    panel.classList.remove('open');
+    isOpen = false;
+  } else {
+    panel.classList.toggle('open');
+    isOpen = !isOpen;
+  }
+  
+  if (isOpen) {
+    syncPanelState();
+  }
+  playSynthSound(isOpen ? 600 : 400, 'triangle', 0.1);
+}
+
+function syncPanelState() {
+  document.querySelectorAll('.dev-theme-item').forEach(function (b) {
+    b.classList.remove('active');
+  });
+  var activeBtn = document.querySelector('.dev-theme-item.dt-' + currentAccent);
+  if (activeBtn) activeBtn.classList.add('active');
+  
+  var statusTheme = document.getElementById('status-theme-val');
+  if (statusTheme) {
+    var label = 'HACKER';
+    if (currentAccent === 'cyan') label = 'PROFESSIONAL DEVELOPER';
+    else if (currentAccent === 'purple') label = 'CYBERPUNK';
+    else if (currentAccent === 'orange') label = 'CREATIVE BUILDER';
+    statusTheme.textContent = label;
+  }
+}
+
+function setAccentColor(color, btn) {
+  currentAccent = color;
+  localStorage.setItem('devAccent', color);
+  applyAccentColors();
+  
+  document.querySelectorAll('.dev-theme-item').forEach(function (b) {
+    b.classList.remove('active');
+  });
+  if (btn) {
+    btn.classList.add('active');
+  } else {
+    var target = document.querySelector('.dev-theme-item.dt-' + color);
+    if (target) target.classList.add('active');
+  }
+  
+  var statusTheme = document.getElementById('status-theme-val');
+  if (statusTheme) {
+    var label = 'HACKER';
+    if (color === 'cyan') label = 'PROFESSIONAL DEVELOPER';
+    else if (color === 'purple') label = 'CYBERPUNK';
+    else if (color === 'orange') label = 'CREATIVE BUILDER';
+    statusTheme.textContent = label;
+  }
+  
+  playSynthSound(800, 'sine', 0.08);
+}
+
+function applyAccentColors() {
+  var mode = isDark ? 'dark' : 'light';
+  var config = ACCENTS[currentAccent] ? ACCENTS[currentAccent][mode] : null;
+  if (config) {
+    Object.keys(config).forEach(function (prop) {
+      document.body.style.setProperty(prop, config[prop]);
+    });
+  }
+}
+
+function toggleLayoutInspector(checked) {
+  isLayoutInspecting = checked;
+  document.body.classList.toggle('layout-inspecting', checked);
+  
+  var statusInspect = document.getElementById('status-inspect-val');
+  if (statusInspect) {
+    statusInspect.textContent = checked ? 'ON' : 'OFF';
+    statusInspect.className = checked ? 'tc-green' : 'tc-muted';
+  }
+  
+  var chk = document.getElementById('layout-inspector-toggle');
+  if (chk) chk.checked = checked;
+  
+  playSynthSound(checked ? 650 : 450, 'triangle', 0.08);
+}
+
+function toggleSoundEffects(checked) {
+  soundEnabled = checked;
+  localStorage.setItem('devSound', checked ? 'true' : 'false');
+  
+  var statusSound = document.getElementById('status-sound-val');
+  if (statusSound) {
+    statusSound.textContent = checked ? 'ON' : 'OFF';
+    statusSound.className = checked ? 'tc-green' : 'tc-muted';
+  }
+  
+  var chk = document.getElementById('sound-effects-toggle');
+  if (chk) chk.checked = checked;
+  
+  if (checked) {
+    playSynthSound(523.25, 'sine', 0.08);
+    setTimeout(function () { playSynthSound(659.25, 'sine', 0.12); }, 80);
+  } else {
+    playSynthSound(330, 'sine', 0.1);
+  }
+}
+
+function toggleThemeFromPanel(checked) {
+  if (checked && isDark) {
+    toggleTheme();
+  } else if (!checked && !isDark) {
+    toggleTheme();
+  }
+  playSynthSound(600, 'sine', 0.08);
+}
+
+function resetDevMode() {
+  playSynthSound(150, 'sawtooth', 0.3);
+  localStorage.removeItem('devPanelUnlocked');
+  localStorage.removeItem('devAccent');
+  localStorage.removeItem('devSound');
+  
+  var mode = isDark ? 'dark' : 'light';
+  Object.keys(ACCENTS.green[mode]).forEach(function (prop) {
+    document.body.style.removeProperty(prop);
+  });
+  
+  setTimeout(function () {
+    window.location.reload();
+  }, 350);
+}
+
+/* ── WEB AUDIO SYNTH SOUNDS ── */
+var audioCtx = null;
+function playSynthSound(freq, type, duration) {
+  if (!soundEnabled) return;
+  try {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    var osc = audioCtx.createOscillator();
+    var gain = audioCtx.createGain();
+    osc.type = type || 'sine';
+    osc.frequency.setValueAtTime(freq || 440, audioCtx.currentTime);
+    gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + (duration || 0.15));
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + (duration || 0.15));
+  } catch (e) {
+    console.warn("Web Audio failed:", e);
+  }
+}
+
+function playSuccessSound() {
+  setTimeout(function () { playSynthSound(523.25, 'sine', 0.12); }, 0);
+  setTimeout(function () { playSynthSound(659.25, 'sine', 0.12); }, 100);
+  setTimeout(function () { playSynthSound(783.99, 'sine', 0.12); }, 200);
+  setTimeout(function () { playSynthSound(1046.50, 'sine', 0.25); }, 300);
+}
+
+/* ── MATRIX DIGITAL RAIN EFFECT ── */
+var matrixInterval = null;
+function startMatrixRain() {
+  playSynthSound(880, 'sine', 0.15);
+  var overlay = document.getElementById('matrix-overlay');
+  var canvas = document.getElementById('matrix-canvas');
+  if (!overlay || !canvas) return;
+  overlay.style.display = 'block';
+  var ctx = canvas.getContext('2d');
+  
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+  
+  var katakana = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  var alphabet = katakana.split("");
+  
+  var fontSize = 16;
+  var columns = Math.floor(canvas.width / fontSize) + 1;
+  
+  var rainDrops = [];
+  for (var x = 0; x < columns; x++) {
+    rainDrops[x] = Math.random() * -100;
+  }
+  
+  function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    var fillStyle = '#0F0';
+    if (currentAccent === 'cyan') fillStyle = '#0FF';
+    else if (currentAccent === 'purple') fillStyle = '#F0F';
+    else if (currentAccent === 'orange') fillStyle = '#FFD700';
+    
+    ctx.fillStyle = fillStyle;
+    ctx.font = fontSize + 'px monospace';
+    
+    for (var i = 0; i < rainDrops.length; i++) {
+      var text = alphabet[Math.floor(Math.random() * alphabet.length)];
+      ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+      
+      if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        rainDrops[i] = 0;
+      }
+      rainDrops[i]++;
+    }
+  }
+  
+  matrixInterval = setInterval(draw, 33);
+  
+  function handleEsc(e) {
+    if (e.key === 'Escape') {
+      closeMatrixOverlay();
+      window.removeEventListener('keydown', handleEsc);
+    }
+  }
+  window.addEventListener('keydown', handleEsc);
+}
+
+function closeMatrixOverlay() {
+  var overlay = document.getElementById('matrix-overlay');
+  if (overlay) overlay.style.display = 'none';
+  if (matrixInterval) {
+    clearInterval(matrixInterval);
+    matrixInterval = null;
+  }
+  playSynthSound(440, 'sine', 0.1);
+}
+
+/* ── ADDITIONAL DEV COMMANDS ── */
+TERM_CMDS['help-dev'] = function () {
+  if (localStorage.getItem('devPanelUnlocked') !== 'true') return undefined;
+  return '<div class="tc-neon">Unlocked Developer Commands:</div>' +
+    '<div>&nbsp;&nbsp;<span class="tc-blue">matrix</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— falling Matrix digital rain</div>' +
+    '<div>&nbsp;&nbsp;<span class="tc-blue">inspect</span>&nbsp;&nbsp;&nbsp;&nbsp;— toggle visual layout borders</div>' +
+    '<div>&nbsp;&nbsp;<span class="tc-blue">stats</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— print portfolio metrics</div>' +
+    '<div>&nbsp;&nbsp;<span class="tc-blue">sound</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— toggle retro sound effects</div>' +
+    '<div>&nbsp;&nbsp;<span class="tc-blue">hire</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— display hiring contact card</div>' +
+    '<div>&nbsp;&nbsp;<span class="tc-blue">theme</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— change accent color (theme [green|cyan|purple|orange])</div>';
+};
+
+TERM_CMDS.matrix = function () {
+  if (localStorage.getItem('devPanelUnlocked') !== 'true') return undefined;
+  setTimeout(startMatrixRain, 200);
+  return '<span class="tc-green">Running matrix stream...</span>';
+};
+
+TERM_CMDS.inspect = function () {
+  if (localStorage.getItem('devPanelUnlocked') !== 'true') return undefined;
+  var currentVal = isLayoutInspecting;
+  toggleLayoutInspector(!currentVal);
+  return 'Layout inspector is now <span class="tc-neon">' + (!currentVal ? 'ON' : 'OFF') + '</span>.';
+};
+
+TERM_CMDS.stats = function () {
+  if (localStorage.getItem('devPanelUnlocked') !== 'true') return undefined;
+  var projectsCount = document.querySelectorAll('.pj-card').length;
+  var skillsCount = document.querySelectorAll('.skill-item').length || 25;
+  return '<div class="tc-neon">PORTFOLIO DIAGNOSTICS:</div>' +
+    '<div>&nbsp;&nbsp;Projects&nbsp;&nbsp;&nbsp;: <span class="tc-green">' + projectsCount + '</span></div>' +
+    '<div>&nbsp;&nbsp;Skills&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="tc-green">' + skillsCount + '</span></div>' +
+    '<div>&nbsp;&nbsp;Hackathons&nbsp;: <span class="tc-green">8</span></div>';
+};
+
+TERM_CMDS.sound = function () {
+  if (localStorage.getItem('devPanelUnlocked') !== 'true') return undefined;
+  var currentVal = soundEnabled;
+  toggleSoundEffects(!currentVal);
+  return 'Sound effects are now <span class="tc-neon">' + (!currentVal ? 'ON' : 'OFF') + '</span>.';
+};
+
+TERM_CMDS.theme = function (arg) {
+  if (localStorage.getItem('devPanelUnlocked') !== 'true') return undefined;
+  if (!arg) {
+    return 'Usage: <span class="tc-neon">theme [green|cyan|purple|orange]</span>';
+  }
+  if (['green', 'cyan', 'purple', 'orange'].indexOf(arg) !== -1) {
+    var btn = document.querySelector('.dev-theme-item.dt-' + arg);
+    setAccentColor(arg, btn);
+    return 'Theme accent updated to <span class="tc-neon">' + arg.toUpperCase() + '</span>.';
+  }
+  return 'Invalid theme. Choose from: <span class="tc-neon">green, cyan, purple, orange</span>';
+};
+
+TERM_CMDS.hire = function () {
+  if (localStorage.getItem('devPanelUnlocked') !== 'true') return undefined;
+  return '<div class="tc-amber">⚡ hire vraj ashokbhai parekh ⚡</div>' +
+    '<div>Email&nbsp;&nbsp;&nbsp;&nbsp;: <span style="color:var(--neon)">vraj13122005@gmail.com</span></div>' +
+    '<div>LinkedIn : <span class="tc-blue">linkedin.com/in/vraj-parekh-7b801b30b</span></div>' +
+    '<div>GitHub&nbsp;&nbsp;&nbsp;: <span class="tc-violet">github.com/vrajparekh1312</span></div>' +
+    '<div>Status&nbsp;&nbsp;&nbsp;: <span class="tc-green">Ready for Internships &amp; FTE Positions ✓</span></div>';
+};
+
+// Initial state application
+window.addEventListener('load', function () {
+  if (localStorage.getItem('devPanelUnlocked') === 'true') {
+    showDevPanelTrigger();
+    applyAccentColors();
+  }
+  
+  var aiInp = document.getElementById('ai-inp');
+  if (aiInp) {
+    aiInp.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter') {
+        var freq = 300 + Math.random() * 150;
+        playSynthSound(freq, 'triangle', 0.03);
+      }
+    });
+  }
+});
